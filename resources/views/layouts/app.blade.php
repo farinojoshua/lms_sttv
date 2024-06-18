@@ -1,45 +1,71 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>@yield('title', 'Dashboard')</title>
+    <meta content="Responsive admin theme build on top of Bootstrap 4" name="description" />
+    <meta content="Themesdesign" name="author" />
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="{{ asset('plugins/morris/morris.css') }}">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/metismenu.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css">
+    @stack('css')
+</head>
 
-        <!-- Styles -->
-        @livewireStyles
-    </head>
-    <body class="font-sans antialiased">
-        <x-banner />
+<body>
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+    <!-- Begin page -->
+    <div id="wrapper">
+        @include('layouts.partials.header')
+        @include('layouts.partials.sidebar')
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
+                <div class="container-fluid">
+                    @yield('content')
+                </div> <!-- container-fluid -->
+            </div> <!-- content -->
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            <footer class="footer">
+                © 2019 - 2020 Stexo <span class="d-none d-sm-inline-block"> - Crafted with <i
+                        class="mdi mdi-heart text-danger"></i> by Themesdesign</span>.
+            </footer>
         </div>
+        <!-- ============================================================== -->
+        <!-- End Right content here -->
+        <!-- ============================================================== -->
 
-        @stack('modals')
+    </div>
+    <!-- END wrapper -->
 
-        @livewireScripts
-    </body>
+    <!-- jQuery  -->
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/metismenu.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ asset('assets/js/waves.min.js') }}"></script>
+
+    <!--Morris Chart-->
+    <script src="{{ asset('plugins/morris/morris.min.js') }}"></script>
+    <script src="{{ asset('plugins/raphael/raphael.min.js') }}"></script>
+
+    <script src="{{ asset('assets/pages/dashboard.init.js') }}"></script>
+
+    <!-- App js -->
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    @stack('scripts')
+</body>
+
 </html>
