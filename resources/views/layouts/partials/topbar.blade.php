@@ -1,7 +1,7 @@
 <!-- Top Bar Start -->
 <div class="topbar">
     <div class="topbar-left">
-        <a href="{{ route('dashboard') }}" class="logo">
+        <a href="{{ route('admin.dashboard') }}" class="logo">
             <span class="logo-light">
                 <i class="mdi mdi-camera-control"></i> Stexo
             </span>
@@ -10,7 +10,6 @@
             </span>
         </a>
     </div>
-
     <nav class="navbar-custom">
         <ul class="navbar-right list-inline float-right mb-0">
             <!-- language-->
@@ -18,7 +17,8 @@
                 <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#"
                     role="button" aria-haspopup="false" aria-expanded="false">
                     <img src="{{ asset('assets/images/flags/us_flag.jpg') }}" class="mr-2" height="12"
-                        alt="" /> English <span class="mdi mdi-chevron-down"></span>
+                        alt="" /> English
+                    <span class="mdi mdi-chevron-down"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated language-switch">
                     <a class="dropdown-item" href="#"><img
@@ -36,14 +36,12 @@
                             alt="" height="16" /><span> Italian </span></a>
                 </div>
             </li>
-
             <!-- full screen -->
             <li class="dropdown notification-list list-inline-item d-none d-md-inline-block">
                 <a class="nav-link waves-effect" href="#" id="btn-fullscreen">
                     <i class="mdi mdi-arrow-expand-all noti-icon"></i>
                 </a>
             </li>
-
             <!-- notification -->
             <li class="dropdown notification-list list-inline-item">
                 <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#"
@@ -61,43 +59,37 @@
                             <p class="notify-details"><b>Your order is placed</b><span class="text-muted">Dummy text of
                                     the printing and typesetting industry.</span></p>
                         </a>
-
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="notify-icon bg-danger"><i class="mdi mdi-message-text-outline"></i></div>
                             <p class="notify-details"><b>New Message received</b><span class="text-muted">You have 87
                                     unread messages</span></p>
                         </a>
-
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="notify-icon bg-info"><i class="mdi mdi-filter-outline"></i></div>
                             <p class="notify-details"><b>Your item is shipped</b><span class="text-muted">It is a long
                                     established fact that a reader will</span></p>
                         </a>
-
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="notify-icon bg-success"><i class="mdi mdi-message-text-outline"></i></div>
                             <p class="notify-details"><b>New Message received</b><span class="text-muted">You have 87
                                     unread messages</span></p>
                         </a>
-
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="notify-icon bg-warning"><i class="mdi mdi-cart-outline"></i></div>
                             <p class="notify-details"><b>Your order is placed</b><span class="text-muted">Dummy text of
                                     the printing and typesetting industry.</span></p>
                         </a>
-
                     </div>
                     <!-- All-->
-                    <a href="javascript:void(0);" class="dropdown-item text-center notify-all text-primary">
-                        View all <i class="fi-arrow-right"></i>
-                    </a>
+                    <a href="javascript:void(0);" class="dropdown-item text-center notify-all text-primary">View all <i
+                            class="fi-arrow-right"></i></a>
                 </div>
             </li>
-
+            <!-- profile -->
             <li class="dropdown notification-list list-inline-item">
                 <div class="dropdown notification-list nav-pro-img">
                     <a class="dropdown-toggle nav-link arrow-none nav-user" data-toggle="dropdown" href="#"
@@ -108,21 +100,24 @@
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                         <!-- item-->
                         <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle"></i> Profile</a>
-                        <a class="dropdown-item" href="#"><i class="mdi mdi-wallet"></i> Wallet</a>
+                        <a class="dropdown-item" href="#"><i class="mdi mdi-wallet"></i> My Wallet</a>
                         <a class="dropdown-item d-block" href="#"><span
                                 class="badge badge-success float-right">11</span><i class="mdi mdi-settings"></i>
                             Settings</a>
                         <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline"></i> Lock
                             screen</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="#"><i class="mdi mdi-power text-danger"></i>
-                            Logout</a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); this.closest('form').submit();">
+                                <i class="mdi mdi-power text-danger"></i> Logout
+                            </a>
+                        </form>
                     </div>
                 </div>
             </li>
-
         </ul>
-
         <ul class="list-inline menu-left mb-0">
             <li class="float-left">
                 <button class="button-menu-mobile open-left waves-effect">
