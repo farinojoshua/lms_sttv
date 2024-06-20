@@ -15,6 +15,11 @@ class Assignment extends Model
         'title',
         'description',
         'due_date',
+        'file_path',
+    ];
+
+    protected $casts = [
+        'due_date' => 'datetime',
     ];
 
     public function section()

@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('section_id')->constrained('course_sections')->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('file_path');
+            $table->string('file_path')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

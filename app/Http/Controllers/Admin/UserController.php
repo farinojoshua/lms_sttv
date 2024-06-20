@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -37,14 +39,8 @@ class UserController extends Controller
             'role' => 'required|in:admin,teacher,student',
         ]);
 
-        // dd($validated)
-
-        User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => bcrypt($validated['password']),
-            'role' => $validated['role'],
-        ]);
+        $validated['password'] = bcrypt($validated['password']);
+        User::create($validated);
 
         return redirect()->route('admin.users.index')->with('success', 'User berhasil ditambahkan.');
     }
@@ -69,14 +65,15 @@ class UserController extends Controller
             'role' => 'required|in:admin,teacher,student',
         ]);
 
-        $user->update([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'role' => $validated['role'],
-            'password' => $request->password ? bcrypt($request->password) : $user->password,
-        ]);
+        if ($request->password) {
+            $validated['password'] = bcrypt($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
 
-        return redirect()->route('admin.users.index')->with('success', 'User berhasil diperbarui.');
+        $user->update($validated);
+
+        return redirect()->route('admin.users.index')->with('success', 'User berhasil diupdate.');
     }
 
     /**
@@ -86,5 +83,16 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('admin.users.index')->with('success', 'User berhasil dihapus.');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx'
+        ]);
+
+        Excel::import(new UsersImport, $request->file('file'));
+
+        return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil diimpor.');
     }
 }

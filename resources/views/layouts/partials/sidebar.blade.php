@@ -5,20 +5,66 @@
             <!-- Left Menu Start -->
             <ul class="metismenu" id="side-menu">
                 <li class="menu-title">Menu</li>
-                <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                    <a href="{{ route('admin.dashboard') }}" class="waves-effect">
+                @php
+                    $role = Auth::user()->role;
+                @endphp
+
+                <li
+                    class="{{ request()->routeIs('dashboard') || request()->routeIs("{$role}.dashboard") ? 'active' : '' }}">
+                    <a href="{{ route('dashboard') }}" class="waves-effect">
                         <i class="icon-accelerator"></i><span> Dashboard </span>
                     </a>
                 </li>
-                <li class="{{ request()->routeIs('admin.courses.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.courses.index') }}" class="waves-effect"><i
-                            class="icon-paper-sheet"></i><span> Mata Kuliah </span></a>
-                </li>
-                <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.users.index') }}" class="waves-effect"><i class="icon-case"></i><span>
-                            Pengguna </span></a>
-                </li>
-                <!-- Other sidebar items -->
+
+                @if ($role == 'admin')
+                    <li class="{{ request()->routeIs('admin.courses.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.courses.index') }}" class="waves-effect">
+                            <i class="icon-paper-sheet"></i><span> Courses </span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.users.index') }}" class="waves-effect">
+                            <i class="icon-people"></i><span> Users </span>
+                        </a>
+                    </li>
+                @elseif ($role == 'teacher')
+                    @php
+                        $teacherCourseActive =
+                            request()->routeIs('teacher.courses.*') || request()->routeIs('teacher.sections.*');
+                    @endphp
+                    <li class="{{ $teacherCourseActive ? 'active' : '' }}">
+                        <a href="{{ route('teacher.courses.index') }}" class="waves-effect">
+                            <i class="icon-paper-sheet"></i><span> Courses </span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('teacher.grades.index') ? 'active' : '' }}">
+                        <a href="{{ route('teacher.grades.index') }}" class="waves-effect">
+                            <i class="icon-graduation"></i><span> Nilai </span>
+                        </a>
+                    </li>
+                @elseif ($role == 'student')
+                    @php
+                        $studentCourseActive =
+                            request()->routeIs('student.courses.index') ||
+                            request()->routeIs('student.courses.enrolled') ||
+                            request()->routeIs('student.sections.*');
+                    @endphp
+                    <li class="{{ $studentCourseActive ? 'active' : '' }}">
+                        <a href="{{ route('student.courses.index') }}" class="waves-effect">
+                            <i class="icon-paper-sheet"></i><span> Available Courses </span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('student.courses.enrolled') ? 'active' : '' }}">
+                        <a href="{{ route('student.courses.enrolled') }}" class="waves-effect">
+                            <i class="icon-paper-sheet"></i><span> Enrolled Courses </span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('student.grades.index') ? 'active' : '' }}">
+                        <a href="{{ route('student.grades.index') }}" class="waves-effect">
+                            <i class="icon-graduation"></i><span> Nilai </span>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
         <!-- Sidebar -->
