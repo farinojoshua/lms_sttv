@@ -25,7 +25,7 @@ class MaterialController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,jpg,jpeg,png|max:10240',
         ]);
 
         $filePath = $request->file('file') ? $request->file('file')->store('materials', 'public') : null;
@@ -50,7 +50,7 @@ class MaterialController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,jpg,jpeg,png|max:10240',
         ]);
 
         if ($request->file('file')) {

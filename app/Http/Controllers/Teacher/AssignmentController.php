@@ -27,7 +27,7 @@ class AssignmentController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'required|date_format:Y-m-d\TH:i',
-            'file' => 'nullable|file|mimes:pdf,doc,docx',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,jpg,jpeg,png|max:10240',
         ]);
 
         $filePath = $request->file('file') ? $request->file('file')->store('assignments', 'public') : null;
@@ -54,7 +54,7 @@ class AssignmentController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'required|date_format:Y-m-d\TH:i',
-            'file' => 'nullable|file|mimes:pdf,doc,docx',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,jpg,jpeg,png|max:10240',
         ]);
 
         if ($request->file('file')) {

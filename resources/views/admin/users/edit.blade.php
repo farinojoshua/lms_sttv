@@ -54,7 +54,8 @@
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+                        <form action="{{ route('admin.users.update', $user->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="form-group row">
@@ -96,6 +97,16 @@
                                         <option value="student" {{ $user->role == 'student' ? 'selected' : '' }}>Mahasiswa
                                         </option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="profile_photo" class="col-sm-2 col-form-label">Foto Profil</label>
+                                <div class="col-sm-10">
+                                    <input type="file" class="form-control" name="profile_photo" id="profile_photo">
+                                    @if ($user->profile_photo_path)
+                                        <img src="{{ asset('storage/' . $user->profile_photo_path) }}" alt="Profile Photo"
+                                            class="img-thumbnail mt-2" width="150">
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group row">

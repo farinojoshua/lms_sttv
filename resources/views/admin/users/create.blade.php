@@ -53,7 +53,7 @@
         <div class="col-12">
             <div class="card m-b-30">
                 <div class="card-body">
-                    <form action="{{ route('admin.users.store') }}" method="POST">
+                    <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-sm-2 col-form-label">Nama</label>
@@ -88,6 +88,12 @@
                                     <option value="teacher">Dosen</option>
                                     <option value="student">Mahasiswa</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="profile_photo" class="col-sm-2 col-form-label">Foto Profil</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" name="profile_photo" id="profile_photo">
                             </div>
                         </div>
                         <div class="form-group row">

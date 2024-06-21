@@ -99,6 +99,7 @@
                     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="width: 100%;">
                         <thead>
                             <tr>
+                                <th>Foto Profil</th>
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Role</th>
@@ -108,6 +109,15 @@
                         <tbody>
                             @foreach ($users as $user)
                                 <tr>
+                                    <td>
+                                        @if ($user->profile_photo_path)
+                                            <img src="{{ asset('storage/' . $user->profile_photo_path) }}"
+                                                alt="Profile Photo" class="img-thumbnail" width="50">
+                                        @else
+                                            <img src="{{ asset('assets/images/users/default.png') }}" alt="Profile Photo"
+                                                class="img-thumbnail" width="50">
+                                        @endif
+                                    </td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $roles[$user->role] ?? ucfirst($user->role) }}</td>

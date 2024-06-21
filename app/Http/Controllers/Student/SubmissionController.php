@@ -23,7 +23,7 @@ class SubmissionController extends Controller
         }
 
         $request->validate([
-            'file' => 'required|file|mimes:pdf,doc,docx,ppt,pptx',
+            'file' => 'required|file|mimes:pdf,doc,docx,ppt,pptx,jpg,jpeg,png|max:10240',
         ]);
 
         $filePath = $request->file('file')->store('submissions', 'public');
