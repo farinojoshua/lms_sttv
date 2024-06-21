@@ -18,7 +18,7 @@ use App\Http\Controllers\Student\GradeController as StudentGradeController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::middleware([
