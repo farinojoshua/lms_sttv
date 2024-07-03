@@ -58,11 +58,11 @@
                     <p>Grade: {{ $submission->grade ?? 'Not graded yet' }}</p>
                     <p>Feedback: {{ $submission->feedback ?? 'No feedback yet' }}</p>
 
-                    <a href="{{ route('student.submissions.edit', $submission->id) }}" class="btn btn-success btn-sm">Edit Submission</a>
+                    <a href="{{ route('student.submissions.edit', $submission->id) }}" class="btn btn-success">Edit Submission</a>
                 </div>
             @else
                 @if ($assignment->due_date > now())
-                    <a href="{{ route('student.assignments.submit.create', $assignment->id) }}" class="btn btn-success btn-sm">Submit Assignment</a>
+                    <a href="{{ route('student.assignments.submit.create', $assignment->id) }}" class="btn btn-success">Submit Assignment</a>
                 @else
                     <p class="text-danger">The assignment submission deadline has passed.</p>
                 @endif

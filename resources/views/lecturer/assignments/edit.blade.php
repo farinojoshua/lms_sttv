@@ -56,27 +56,37 @@
                     <form action="{{ route('lecturer.sections.assignments.update', ['section' => $section, 'assignment' => $assignment]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="form-group">
-                            <label for="title">Assignment Title</label>
-                            <input type="text" class="form-control" id="title" name="title" value="{{ $assignment->title }}" required>
+                        <div class="form-group row">
+                            <label for="title" class="col-sm-2 col-form-label">Assignment Title</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="title" name="title" value="{{ $assignment->title }}" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="3">{{ $assignment->description }}</textarea>
+                        <div class="form-group row">
+                            <label for="description" class="col-sm-2 col-form-label">Description</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="description" name="description" rows="3">{{ $assignment->description }}</textarea>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="due_date">Due Date</label>
-                            <input type="datetime-local" class="form-control" id="due_date" name="due_date" value="{{ $assignment->due_date->format('Y-m-d\TH:i') }}" required>
+                        <div class="form-group row">
+                            <label for="due_date" class="col-sm-2 col-form-label">Due Date</label>
+                            <div class="col-sm-10">
+                                <input type="datetime-local" class="form-control" id="due_date" name="due_date" value="{{ $assignment->due_date->format('Y-m-d\TH:i') }}" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="file">File</label>
-                            <input type="file" class="form-control" id="file" name="file">
-                            @if ($assignment->file_path)
-                                <p>Current file: <a href="{{ asset('storage/' . $assignment->file_path) }}" target="_blank">View File</a></p>
-                            @endif
+                        <div class="form-group row">
+                            <label for="file" class="col-sm-2 col-form-label">File</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="file" name="file">
+                                @if ($assignment->file_path)
+                                    <p>Current file: <a href="{{ asset('storage/' . $assignment->file_path) }}" target="_blank">View File</a></p>
+                                @endif
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Update</button>
+                        <div class="form-group row">
+                            <div class="col-sm-10 offset-sm-2">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
                         </div>
                     </form>
                 </div>

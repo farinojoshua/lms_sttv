@@ -77,7 +77,7 @@ Route::middleware([
         Route::get('assignments/{assignment}/submit', [StudentSubmissionController::class, 'create'])->name('assignments.submit.create');
         Route::post('assignments/{assignment}/submit', [StudentSubmissionController::class, 'store'])->name('assignments.submit');
         Route::get('submissions/{submission}/edit', [StudentSubmissionController::class, 'edit'])->name('submissions.edit');
-        Route::post('submissions/{submission}/update', [StudentSubmissionController::class, 'update'])->name('submissions.update');
+        Route::put('submissions/{submission}/update', [StudentSubmissionController::class, 'update'])->name('submissions.update');
         Route::get('grades', [StudentGradeController::class, 'index'])->name('grades.index');
     });
 

@@ -55,24 +55,34 @@
                 <div class="card-body">
                     <form action="{{ route('lecturer.sections.assignments.store', $section) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
-                            <label for="title">Assignment Title</label>
-                            <input type="text" class="form-control" id="title" name="title" required>
+                        <div class="form-group row">
+                            <label for="title" class="col-sm-2 col-form-label">Assignment Title</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                        <div class="form-group row">
+                            <label for="description" class="col-sm-2 col-form-label">Description</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="due_date">Due Date</label>
-                            <input type="datetime-local" class="form-control" id="due_date" name="due_date" required>
+                        <div class="form-group row">
+                            <label for="due_date" class="col-sm-2 col-form-label">Due Date</label>
+                            <div class="col-sm-10">
+                                <input type="datetime-local" class="form-control" id="due_date" name="due_date" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="file">File</label>
-                            <input type="file" class="form-control" id="file" name="file">
+                        <div class="form-group row">
+                            <label for="file" class="col-sm-2 col-form-label">File</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="file" name="file">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Add</button>
+                        <div class="form-group row">
+                            <div class="col-sm-10 offset-sm-2">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
                         </div>
                     </form>
                 </div>
