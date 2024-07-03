@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar Mata Kuliah')
+@section('title', 'Course List')
 
 @section('content')
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h4 class="page-title">Daftar Mata Kuliah</h4>
+                <h4 class="page-title">Course List</h4>
             </div>
             <div class="col-sm-6">
-                <ol class="breadcrumb float-right">
-                    <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Daftar Mata Kuliah</li>
+                <ol class="float-right breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('lecturer.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Course List</li>
                 </ol>
             </div>
         </div>
@@ -24,10 +24,10 @@
                     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>Nama</th>
-                                <th>Kode</th>
-                                <th>Deskripsi</th>
-                                <th>Aksi</th>
+                                <th>Name</th>
+                                <th>Code</th>
+                                <th>Description</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,8 +37,8 @@
                                     <td>{{ $course->code }}</td>
                                     <td>{{ $course->description }}</td>
                                     <td>
-                                        <a href="{{ route('teacher.courses.show', $course->id) }}"
-                                            class="btn btn-primary btn-sm">Detail</a>
+                                        <a href="{{ route('lecturer.courses.show', $course->id) }}"
+                                            class="btn btn-primary btn-sm">Details</a>
                                     </td>
                                 </tr>
                             @endforeach

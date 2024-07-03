@@ -1,21 +1,22 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\CourseController as AdminCourseController;
-use App\Http\Controllers\Admin\UserController as AdminUserController;
-use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
-use App\Http\Controllers\Teacher\CourseController as TeacherCourseController;
-use App\Http\Controllers\Teacher\MaterialController as TeacherMaterialController;
-use App\Http\Controllers\Teacher\AssignmentController as TeacherAssignmentController;
-use App\Http\Controllers\Teacher\GradeController as TeacherGradeController;
-use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
-use App\Http\Controllers\Student\CourseController as StudentCourseController;
-use App\Http\Controllers\Student\SubmissionController as StudentSubmissionController;
-use App\Http\Controllers\Student\MaterialController as StudentMaterialController;
-use App\Http\Controllers\Student\AssignmentController as StudentAssignmentController;
-use App\Http\Controllers\Student\GradeController as StudentGradeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\CourseController as AdminCourseController;
+use App\Http\Controllers\Student\GradeController as StudentGradeController;
+use App\Http\Controllers\Lecturer\GradeController as LecturerGradeController;
+use App\Http\Controllers\Student\CourseController as StudentCourseController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Lecturer\CourseController as LecturerCourseController;
+use App\Http\Controllers\Student\MaterialController as StudentMaterialController;
+use App\Http\Controllers\Lecturer\MaterialController as LecturerMaterialController;
+use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
+use App\Http\Controllers\Lecturer\DashboardController as LecturerDashboardController;
+use App\Http\Controllers\Student\AssignmentController as StudentAssignmentController;
+use App\Http\Controllers\Student\SubmissionController as StudentSubmissionController;
+use App\Http\Controllers\Lecturer\AssignmentController as LecturerAssignmentController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -31,8 +32,8 @@ Route::middleware([
         switch ($role) {
             case 'admin':
                 return redirect()->route('admin.dashboard');
-            case 'teacher':
-                return redirect()->route('teacher.dashboard');
+            case 'lecturer':
+                return redirect()->route('lecturer.dashboard');
             case 'student':
                 return redirect()->route('student.dashboard');
             default:
@@ -47,19 +48,19 @@ Route::middleware([
         Route::post('users/import', [AdminUserController::class, 'import'])->name('users.import');
     });
 
-    // Teacher Routes
-    Route::prefix('teacher')->name('teacher.')->middleware('role:teacher')->group(function () {
-        Route::get('dashboard', [TeacherDashboardController::class, 'index'])->name('dashboard');
-        Route::resource('courses', TeacherCourseController::class)->only(['index', 'show']);
-        Route::post('courses/{course}/sections', [TeacherCourseController::class, 'addSection'])->name('courses.addSection');
-        Route::get('courses/{course}/sections/{section}/edit', [TeacherCourseController::class, 'editSection'])->name('courses.editSection');
-        Route::put('courses/{course}/sections/{section}', [TeacherCourseController::class, 'updateSection'])->name('courses.updateSection');
-        Route::delete('courses/{course}/sections/{section}', [TeacherCourseController::class, 'deleteSection'])->name('courses.deleteSection');
-        Route::resource('sections.materials', TeacherMaterialController::class);
-        Route::resource('sections.assignments', TeacherAssignmentController::class);
-        Route::get('sections/{section}/assignments/{assignment}/submissions', [TeacherAssignmentController::class, 'showSubmissions'])->name('sections.assignments.submissions');
-        Route::post('submissions/{submission}/grade', [TeacherAssignmentController::class, 'grade'])->name('submissions.grade');
-        Route::get('grades', [TeacherGradeController::class, 'index'])->name('grades.index');
+    // Lecturer Routes
+    Route::prefix('lecturer')->name('lecturer.')->middleware('role:lecturer')->group(function () {
+        Route::get('dashboard', [LecturerDashboardController::class, 'index'])->name('dashboard');
+        Route::resource('courses', LecturerCourseController::class)->only(['index', 'show']);
+        Route::post('courses/{course}/sections', [LecturerCourseController::class, 'addSection'])->name('courses.addSection');
+        Route::get('courses/{course}/sections/{section}/edit', [LecturerCourseController::class, 'editSection'])->name('courses.editSection');
+        Route::put('courses/{course}/sections/{section}', [LecturerCourseController::class, 'updateSection'])->name('courses.updateSection');
+        Route::delete('courses/{course}/sections/{section}', [LecturerCourseController::class, 'deleteSection'])->name('courses.deleteSection');
+        Route::resource('sections.materials', LecturerMaterialController::class);
+        Route::resource('sections.assignments', LecturerAssignmentController::class);
+        Route::get('sections/{section}/assignments/{assignment}/submissions', [LecturerAssignmentController::class, 'showSubmissions'])->name('sections.assignments.submissions');
+        Route::post('submissions/{submission}/grade', [LecturerAssignmentController::class, 'grade'])->name('submissions.grade');
+        Route::get('grades', [LecturerGradeController::class, 'index'])->name('grades.index');
     });
 
 

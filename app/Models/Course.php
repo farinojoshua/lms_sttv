@@ -14,12 +14,12 @@ class Course extends Model
         'name',
         'code',
         'description',
-        'teacher_id',
+        'lecturer_id',
     ];
 
-    public function teacher()
+    public function lecturer()
     {
-        return $this->belongsTo(User::class, 'teacher_id');
+        return $this->belongsTo(User::class, 'lecturer_id');
     }
 
     public function sections()

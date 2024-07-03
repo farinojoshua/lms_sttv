@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Teacher;
+namespace App\Http\Controllers\Lecturer;
 
 use App\Http\Controllers\Controller;
 use App\Models\CourseSection;
@@ -12,12 +12,12 @@ class MaterialController extends Controller
     public function index(CourseSection $section)
     {
         $materials = Material::where('section_id', $section->id)->get();
-        return view('teacher.materials.index', compact('section', 'materials'));
+        return view('lecturer.materials.index', compact('section', 'materials'));
     }
 
     public function create(CourseSection $section)
     {
-        return view('teacher.materials.create', compact('section'));
+        return view('lecturer.materials.create', compact('section'));
     }
 
     public function store(Request $request, CourseSection $section)
@@ -37,12 +37,12 @@ class MaterialController extends Controller
             'file_path' => $filePath,
         ]);
 
-        return redirect()->route('teacher.sections.materials.index', $section)->with('success', 'Materi berhasil ditambahkan.');
+        return redirect()->route('lecturer.sections.materials.index', $section)->with('success', 'Materi berhasil ditambahkan.');
     }
 
     public function edit(CourseSection $section, Material $material)
     {
-        return view('teacher.materials.edit', compact('section', 'material'));
+        return view('lecturer.materials.edit', compact('section', 'material'));
     }
 
     public function update(Request $request, CourseSection $section, Material $material)
@@ -62,12 +62,12 @@ class MaterialController extends Controller
         $material->description = $request->description;
         $material->save();
 
-        return redirect()->route('teacher.sections.materials.index', $section)->with('success', 'Materi berhasil diperbarui.');
+        return redirect()->route('lecturer.sections.materials.index', $section)->with('success', 'Materi berhasil diperbarui.');
     }
 
     public function destroy(CourseSection $section, Material $material)
     {
         $material->delete();
-        return redirect()->route('teacher.sections.materials.index', $section)->with('success', 'Materi berhasil dihapus.');
+        return redirect()->route('lecturer.sections.materials.index', $section)->with('success', 'Materi berhasil dihapus.');
     }
 }

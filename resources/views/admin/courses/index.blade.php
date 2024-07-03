@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Courses')
+@section('title', 'Manage Courses')
 
 @section('content')
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h4 class="page-title">Mata Kuliah</h4>
+                <h4 class="page-title">Courses</h4>
             </div>
             <div class="col-sm-6">
-                <ol class="breadcrumb float-right">
+                <ol class="float-right breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Mata Kuliah</li>
+                    <li class="breadcrumb-item active">Courses</li>
                 </ol>
             </div>
         </div>
@@ -52,15 +52,15 @@
         <div class="col-12">
             <div class="card m-b-30">
                 <div class="card-body">
-                    <a href="{{ route('admin.courses.create') }}" class="btn btn-primary mb-3">Tambah Mata Kuliah</a>
+                    <a href="{{ route('admin.courses.create') }}" class="mb-3 btn btn-primary">Add Course</a>
                     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>Nama</th>
-                                <th>Kode</th>
-                                <th>Deskripsi</th>
-                                <th>Dosen</th>
-                                <th>Aksi</th>
+                                <th>Name</th>
+                                <th>Code</th>
+                                <th>Description</th>
+                                <th>Lecturer</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,13 +69,13 @@
                                     <td>{{ $course->name }}</td>
                                     <td>{{ $course->code }}</td>
                                     <td>{{ $course->description }}</td>
-                                    <td>{{ $course->teacher->name }}</td>
+                                    <td>{{ $course->lecturer->name }}</td>
                                     <td>
                                         <a href="{{ route('admin.courses.edit', $course->id) }}"
-                                            class="btn btn-primary btn-sm">Ubah</a>
+                                            class="btn btn-primary btn-sm">Edit</a>
                                         <!-- Button trigger delete modal -->
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#deleteCourseModal{{ $course->id }}">Hapus</button>
+                                            data-target="#deleteCourseModal{{ $course->id }}">Delete</button>
 
                                         <!-- Delete Modal -->
                                         <div class="modal fade" id="deleteCourseModal{{ $course->id }}" tabindex="-1"
@@ -85,24 +85,23 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title"
-                                                            id="deleteCourseModalLabel{{ $course->id }}">Hapus Mata
-                                                            Kuliah</h5>
+                                                            id="deleteCourseModalLabel{{ $course->id }}">Delete Course</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        Apakah Anda yakin ingin menghapus mata kuliah ini?
+                                                        Are you sure you want to delete this course?
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Batal</button>
+                                                            data-dismiss="modal">Cancel</button>
                                                         <form action="{{ route('admin.courses.destroy', $course->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
                                                         </form>
                                                     </div>
                                                 </div>

@@ -9,8 +9,7 @@
                     $role = Auth::user()->role;
                 @endphp
 
-                <li
-                    class="{{ request()->routeIs('dashboard') || request()->routeIs("{$role}.dashboard") ? 'active' : '' }}">
+                <li class="{{ request()->routeIs('dashboard') || request()->routeIs("{$role}.dashboard") ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}" class="waves-effect">
                         <i class="icon-accelerator"></i><span> Dashboard </span>
                     </a>
@@ -27,27 +26,23 @@
                             <i class="icon-people"></i><span> Users </span>
                         </a>
                     </li>
-                @elseif ($role == 'teacher')
+                @elseif ($role == 'lecturer')
                     @php
-                        $teacherCourseActive =
-                            request()->routeIs('teacher.courses.*') || request()->routeIs('teacher.sections.*');
+                        $lecturerCourseActive = request()->routeIs('lecturer.courses.*') || request()->routeIs('lecturer.sections.*');
                     @endphp
-                    <li class="{{ $teacherCourseActive ? 'active' : '' }}">
-                        <a href="{{ route('teacher.courses.index') }}" class="waves-effect">
+                    <li class="{{ $lecturerCourseActive ? 'active' : '' }}">
+                        <a href="{{ route('lecturer.courses.index') }}" class="waves-effect">
                             <i class="icon-paper-sheet"></i><span> Courses </span>
                         </a>
                     </li>
-                    <li class="{{ request()->routeIs('teacher.grades.index') ? 'active' : '' }}">
-                        <a href="{{ route('teacher.grades.index') }}" class="waves-effect">
-                            <i class="icon-graduation"></i><span> Nilai </span>
+                    <li class="{{ request()->routeIs('lecturer.grades.index') ? 'active' : '' }}">
+                        <a href="{{ route('lecturer.grades.index') }}" class="waves-effect">
+                            <i class="icon-graduation"></i><span> Grades </span>
                         </a>
                     </li>
                 @elseif ($role == 'student')
                     @php
-                        $studentCourseActive =
-                            request()->routeIs('student.courses.index') ||
-                            request()->routeIs('student.courses.enrolled') ||
-                            request()->routeIs('student.sections.*');
+                        $studentCourseActive = request()->routeIs('student.courses.index') || request()->routeIs('student.courses.enrolled') || request()->routeIs('student.sections.*');
                     @endphp
                     <li class="{{ $studentCourseActive ? 'active' : '' }}">
                         <a href="{{ route('student.courses.index') }}" class="waves-effect">
@@ -61,7 +56,7 @@
                     </li>
                     <li class="{{ request()->routeIs('student.grades.index') ? 'active' : '' }}">
                         <a href="{{ route('student.grades.index') }}" class="waves-effect">
-                            <i class="icon-graduation"></i><span> Nilai </span>
+                            <i class="icon-graduation"></i><span> Grades </span>
                         </a>
                     </li>
                 @endif

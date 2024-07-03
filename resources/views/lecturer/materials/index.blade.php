@@ -1,19 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Materi Pembelajaran')
+@section('title', 'Learning Materials')
 
 @section('content')
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h4 class="page-title">Materi Pembelajaran</h4>
+                <h4 class="page-title">Learning Materials</h4>
             </div>
             <div class="col-sm-6">
-                <ol class="breadcrumb float-right">
-                    <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('teacher.courses.show', $section->course_id) }}">Detail Mata
-                            Kuliah</a></li>
-                    <li class="breadcrumb-item active">Materi Pembelajaran</li>
+                <ol class="float-right breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('lecturer.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('lecturer.courses.show', $section->course_id) }}">Course Details</a></li>
+                    <li class="breadcrumb-item active">Learning Materials</li>
                 </ol>
             </div>
         </div>
@@ -28,19 +27,40 @@
         </div>
     @endif
 
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-12">
             <div class="card m-b-30">
                 <div class="card-body">
-                    <a href="{{ route('teacher.sections.materials.create', $section->id) }}"
-                        class="btn btn-primary mb-3">Tambah Materi</a>
+                    <a href="{{ route('lecturer.sections.materials.create', $section->id) }}" class="mb-3 btn btn-primary">Add Material</a>
                     <table class="table table-bordered dt-responsive nowrap" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>Judul</th>
-                                <th>Deskripsi</th>
+                                <th>Title</th>
+                                <th>Description</th>
                                 <th>File</th>
-                                <th>Aksi</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,47 +70,37 @@
                                     <td>{{ $material->description }}</td>
                                     <td>
                                         @if ($material->file_path)
-                                            <a href="{{ asset('storage/' . $material->file_path) }}" target="_blank">Lihat
-                                                File</a>
+                                            <a href="{{ asset('storage/' . $material->file_path) }}" target="_blank">View File</a>
                                         @else
-                                            Tidak ada file
+                                            No file
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('teacher.sections.materials.edit', ['section' => $section->id, 'material' => $material->id]) }}"
-                                            class="btn btn-primary btn-sm">Edit</a>
+                                        <a href="{{ route('lecturer.sections.materials.edit', ['section' => $section->id, 'material' => $material->id]) }}" class="btn btn-primary btn-sm">Edit</a>
                                         <!-- Button trigger delete modal -->
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#deleteMaterialModal{{ $material->id }}">Hapus</button>
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteMaterialModal{{ $material->id }}">Delete</button>
                                     </td>
                                 </tr>
 
                                 <!-- Delete Material Modal -->
-                                <div class="modal fade" id="deleteMaterialModal{{ $material->id }}" tabindex="-1"
-                                    role="dialog" aria-labelledby="deleteMaterialModalLabel{{ $material->id }}"
-                                    aria-hidden="true">
+                                <div class="modal fade" id="deleteMaterialModal{{ $material->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteMaterialModalLabel{{ $material->id }}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteMaterialModalLabel{{ $material->id }}">
-                                                    Hapus Materi</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
+                                                <h5 class="modal-title" id="deleteMaterialModalLabel{{ $material->id }}">Delete Material</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                Apakah Anda yakin ingin menghapus materi ini?
+                                                Are you sure you want to delete this material?
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Batal</button>
-                                                <form
-                                                    action="{{ route('teacher.sections.materials.destroy', ['section' => $section->id, 'material' => $material->id]) }}"
-                                                    method="POST">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                <form action="{{ route('lecturer.sections.materials.destroy', ['section' => $section->id, 'material' => $material->id]) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
                                             </div>
                                         </div>

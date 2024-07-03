@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Teacher;
+namespace App\Http\Controllers\Lecturer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
@@ -13,12 +13,12 @@ class AssignmentController extends Controller
     public function index(CourseSection $section)
     {
         $assignments = Assignment::where('section_id', $section->id)->get();
-        return view('teacher.assignments.index', compact('section', 'assignments'));
+        return view('lecturer.assignments.index', compact('section', 'assignments'));
     }
 
     public function create(CourseSection $section)
     {
-        return view('teacher.assignments.create', compact('section'));
+        return view('lecturer.assignments.create', compact('section'));
     }
 
     public function store(Request $request, CourseSection $section)
@@ -40,12 +40,12 @@ class AssignmentController extends Controller
             'file_path' => $filePath,
         ]);
 
-        return redirect()->route('teacher.sections.assignments.index', $section)->with('success', 'Tugas berhasil ditambahkan.');
+        return redirect()->route('lecturer.sections.assignments.index', $section)->with('success', 'Tugas berhasil ditambahkan.');
     }
 
     public function edit(CourseSection $section, Assignment $assignment)
     {
-        return view('teacher.assignments.edit', compact('section', 'assignment'));
+        return view('lecturer.assignments.edit', compact('section', 'assignment'));
     }
 
     public function update(Request $request, CourseSection $section, Assignment $assignment)
@@ -67,13 +67,13 @@ class AssignmentController extends Controller
         $assignment->due_date = $request->due_date;
         $assignment->save();
 
-        return redirect()->route('teacher.sections.assignments.index', $section)->with('success', 'Tugas berhasil diperbarui.');
+        return redirect()->route('lecturer.sections.assignments.index', $section)->with('success', 'Tugas berhasil diperbarui.');
     }
 
     public function destroy(CourseSection $section, Assignment $assignment)
     {
         $assignment->delete();
-        return redirect()->route('teacher.sections.assignments.index', $section)->with('success', 'Tugas berhasil dihapus.');
+        return redirect()->route('lecturer.sections.assignments.index', $section)->with('success', 'Tugas berhasil dihapus.');
     }
 
     public function grade(Request $request, Submission $submission)
@@ -90,12 +90,12 @@ class AssignmentController extends Controller
 
         // Use the assignment to find the section and course
         $section = $submission->assignment->section;
-        return redirect()->route('teacher.sections.assignments.index', $section->id)->with('success', 'Nilai dan feedback berhasil diberikan.');
+        return redirect()->route('lecturer.sections.assignments.index', $section->id)->with('success', 'Nilai dan feedback berhasil diberikan.');
     }
 
     public function showSubmissions(CourseSection $section, Assignment $assignment)
     {
         $submissions = $assignment->submissions()->with('student')->get();
-        return view('teacher.submissions.index', compact('section', 'assignment', 'submissions'));
+        return view('lecturer.submissions.index', compact('section', 'assignment', 'submissions'));
     }
 }

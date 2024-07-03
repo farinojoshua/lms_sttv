@@ -44,7 +44,7 @@ class CourseController extends Controller
 
     public function enrolled()
     {
-        $courses = Enrollment::where('student_id', Auth::id())->with('course.teacher')->get()->pluck('course');
+        $courses = Enrollment::where('student_id', Auth::id())->with('course.lecturer')->get()->pluck('course');
 
         return view('student.courses.enrolled', compact('courses'));
     }

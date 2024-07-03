@@ -1,17 +1,19 @@
 @extends('layouts.app')
 
+@section('title', 'Edit Course')
+
 @section('content')
     <div class="container-fluid">
         <div class="page-title-box">
             <div class="row align-items-center">
                 <div class="col-sm-6">
-                    <h4 class="page-title">Ubah Mata Kuliah</h4>
+                    <h4 class="page-title">Edit Course</h4>
                 </div>
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-right">
+                    <ol class="float-right breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.courses.index') }}">Mata Kuliah</a></li>
-                        <li class="breadcrumb-item active">Ubah</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.courses.index') }}">Courses</a></li>
+                        <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
             </div> <!-- end row -->
@@ -57,40 +59,40 @@
                             @csrf
                             @method('PUT')
                             <div class="form-group row">
-                                <label for="name" class="col-sm-2 col-form-label">Nama Mata Kuliah</label>
+                                <label for="name" class="col-sm-2 col-form-label">Course Name</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" type="text" name="name" value="{{ $course->name }}"
                                         id="name">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="code" class="col-sm-2 col-form-label">Kode Mata Kuliah</label>
+                                <label for="code" class="col-sm-2 col-form-label">Course Code</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" type="text" name="code" value="{{ $course->code }}"
                                         id="code">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="description" class="col-sm-2 col-form-label">Deskripsi</label>
+                                <label for="description" class="col-sm-2 col-form-label">Description</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control" name="description" id="description">{{ $course->description }}</textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="teacher_id" class="col-sm-2 col-form-label">Dosen</label>
+                                <label for="lecturer_id" class="col-sm-2 col-form-label">Lecturer</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" name="teacher_id" id="teacher_id">
-                                        @foreach ($teachers as $teacher)
-                                            <option value="{{ $teacher->id }}"
-                                                {{ $teacher->id == $course->teacher_id ? 'selected' : '' }}>
-                                                {{ $teacher->name }}</option>
+                                    <select class="form-control" name="lecturer_id" id="lecturer_id">
+                                        @foreach ($lecturers as $lecturer)
+                                            <option value="{{ $lecturer->id }}"
+                                                {{ $lecturer->id == $course->lecturer_id ? 'selected' : '' }}>
+                                                {{ $lecturer->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10 offset-sm-2">
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                         </form>

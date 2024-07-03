@@ -1,19 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Tugas')
+@section('title', 'Assignment Details')
 
 @section('content')
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h4 class="page-title">Detail Tugas: {{ $assignment->title }}</h4>
+                <h4 class="page-title">Assignment Details: {{ $assignment->title }}</h4>
             </div>
             <div class="col-sm-6">
-                <ol class="breadcrumb float-right">
+                <ol class="float-right breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('student.courses.show', $section->course_id) }}">Detail Mata
-                            Kuliah</a></li>
-                    <li class="breadcrumb-item active">Detail Tugas</li>
+                    <li class="breadcrumb-item"><a href="{{ route('student.courses.show', $section->course_id) }}">Course Details</a></li>
+                    <li class="breadcrumb-item active">Assignment Details</li>
                 </ol>
             </div>
         </div>
@@ -37,17 +36,15 @@
         </div>
     @endif
 
-    <div class="card mb-4">
+    <div class="mb-4 card">
         <div class="card-body">
             <h4 class="card-title">{{ $assignment->title }}</h4>
             <p class="card-text">{{ $assignment->description }}</p>
-            <p>Batas Waktu: {{ $assignment->due_date->format('Y-m-d H:i') }} ({{ $assignment->due_date->diffForHumans() }})
-            </p>
+            <p>Due Date: {{ $assignment->due_date->format('Y-m-d H:i') }} ({{ $assignment->due_date->diffForHumans() }})</p>
             @if ($assignment->file_path)
-                <a href="{{ asset('storage/' . $assignment->file_path) }}" target="_blank" class="btn btn-primary">Lihat
-                    File</a>
+                <a href="{{ asset('storage/' . $assignment->file_path) }}" target="_blank" class="btn btn-primary">View File</a>
             @else
-                <p>Tidak ada file terlampir.</p>
+                <p>No attached file.</p>
             @endif
 
             @php
@@ -55,22 +52,19 @@
             @endphp
 
             @if ($submission)
-                <div class="submission-status mt-3">
-                    <h6>Status Pengumpulan</h6>
-                    <p>File yang dikumpulkan: <a href="{{ asset('storage/' . $submission->file_path) }}"
-                            target="_blank">Lihat File</a></p>
-                    <p>Nilai: {{ $submission->grade ?? 'Belum dinilai' }}</p>
-                    <p>Feedback: {{ $submission->feedback ?? 'Belum ada feedback' }}</p>
+                <div class="mt-3 submission-status">
+                    <h6>Submission Status</h6>
+                    <p>Submitted File: <a href="{{ asset('storage/' . $submission->file_path) }}" target="_blank">View File</a></p>
+                    <p>Grade: {{ $submission->grade ?? 'Not graded yet' }}</p>
+                    <p>Feedback: {{ $submission->feedback ?? 'No feedback yet' }}</p>
 
-                    <a href="{{ route('student.submissions.edit', $submission->id) }}" class="btn btn-success btn-sm">Ubah
-                        Tugas</a>
+                    <a href="{{ route('student.submissions.edit', $submission->id) }}" class="btn btn-success btn-sm">Edit Submission</a>
                 </div>
             @else
                 @if ($assignment->due_date > now())
-                    <a href="{{ route('student.assignments.submit.create', $assignment->id) }}"
-                        class="btn btn-success btn-sm">Kumpulkan Tugas</a>
+                    <a href="{{ route('student.assignments.submit.create', $assignment->id) }}" class="btn btn-success btn-sm">Submit Assignment</a>
                 @else
-                    <p class="text-danger">Batas waktu pengumpulan tugas telah lewat.</p>
+                    <p class="text-danger">The assignment submission deadline has passed.</p>
                 @endif
             @endif
         </div>

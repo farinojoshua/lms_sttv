@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Teacher;
+namespace App\Http\Controllers\Lecturer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,9 +14,9 @@ class CourseController extends Controller
     public function index()
     {
         // Mendapatkan kursus yang diajar oleh dosen yang sedang login
-        $courses = Course::where('teacher_id', Auth::id())->get();
+        $courses = Course::where('lecturer_id', Auth::id())->get();
 
-        return view('teacher.courses.index', compact('courses'));
+        return view('lecturer.courses.index', compact('courses'));
     }
 
     public function show(Course $course)
@@ -25,7 +25,7 @@ class CourseController extends Controller
         $enrollments = Enrollment::where('course_id', $course->id)->with('student')->get();
         $sections = CourseSection::where('course_id', $course->id)->get();
 
-        return view('teacher.courses.show', compact('course', 'enrollments', 'sections'));
+        return view('lecturer.courses.show', compact('course', 'enrollments', 'sections'));
     }
 
     public function addSection(Request $request, Course $course)
@@ -41,12 +41,12 @@ class CourseController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('teacher.courses.show', $course)->with('success', 'Bagian kursus berhasil ditambahkan.');
+        return redirect()->route('lecturer.courses.show', $course)->with('success', 'Bagian kursus berhasil ditambahkan.');
     }
 
     public function editSection(Course $course, CourseSection $section)
     {
-        return view('teacher.sections.edit', compact('course', 'section'));
+        return view('lecturer.sections.edit', compact('course', 'section'));
     }
 
     public function updateSection(Request $request, Course $course, CourseSection $section)
@@ -61,13 +61,13 @@ class CourseController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('teacher.courses.show', $course)->with('success', 'Bagian kursus berhasil diperbarui.');
+        return redirect()->route('lecturer.courses.show', $course)->with('success', 'Bagian kursus berhasil diperbarui.');
     }
 
     public function deleteSection(Course $course, CourseSection $section)
     {
         $section->delete();
 
-        return redirect()->route('teacher.courses.show', $course)->with('success', 'Bagian kursus berhasil dihapus.');
+        return redirect()->route('lecturer.courses.show', $course)->with('success', 'Bagian kursus berhasil dihapus.');
     }
 }

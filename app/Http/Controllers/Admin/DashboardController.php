@@ -12,10 +12,10 @@ class DashboardController extends Controller
     {
         $totalUsers = User::count();
         $totalAdmins = User::where('role', 'admin')->count();
-        $totalTeachers = User::where('role', 'teacher')->count();
+        $totalLecturers = User::where('role', 'lecturer')->count();
         $totalStudents = User::where('role', 'student')->count();
         $totalCourses = Course::count();
 
-        return view('admin.dashboard', compact('totalUsers', 'totalAdmins', 'totalTeachers', 'totalStudents', 'totalCourses'));
+        return view('admin.dashboard', compact('totalUsers', 'totalAdmins', 'totalLecturers', 'totalStudents', 'totalCourses'));
     }
 }

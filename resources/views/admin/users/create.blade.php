@@ -6,13 +6,13 @@
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h4 class="page-title">Tambah Pengguna</h4>
+                <h4 class="page-title">Add User</h4>
             </div>
             <div class="col-sm-6">
-                <ol class="breadcrumb float-right">
+                <ol class="float-right breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Pengguna</a></li>
-                    <li class="breadcrumb-item active">Tambah</li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Users</a></li>
+                    <li class="breadcrumb-item active">Add</li>
                 </ol>
             </div>
         </div>
@@ -56,7 +56,7 @@
                     <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">Nama</label>
+                            <label for="name" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
                                 <input class="form-control" type="text" name="name" id="name" required>
                             </div>
@@ -74,7 +74,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="password_confirmation" class="col-sm-2 col-form-label">Konfirmasi Password</label>
+                            <label for="password_confirmation" class="col-sm-2 col-form-label">Confirm Password</label>
                             <div class="col-sm-10">
                                 <input class="form-control" type="password" name="password_confirmation"
                                     id="password_confirmation" required>
@@ -85,20 +85,20 @@
                             <div class="col-sm-10">
                                 <select class="form-control" name="role" id="role" required>
                                     <option value="admin">Admin</option>
-                                    <option value="teacher">Dosen</option>
-                                    <option value="student">Mahasiswa</option>
+                                    <option value="lecturer">Lecturer</option>
+                                    <option value="student">Student</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="profile_photo" class="col-sm-2 col-form-label">Foto Profil</label>
+                            <label for="profile_photo" class="col-sm-2 col-form-label">Profile Photo</label>
                             <div class="col-sm-10">
                                 <input type="file" class="form-control" name="profile_photo" id="profile_photo">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-10 offset-sm-2">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </div>
                     </form>

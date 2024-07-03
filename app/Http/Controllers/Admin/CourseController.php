@@ -11,14 +11,14 @@ class CourseController extends Controller
 {
     public function index()
     {
-        $courses = Course::with('teacher')->get();
+        $courses = Course::with('lecturer')->get();
         return view('admin.courses.index', compact('courses'));
     }
 
     public function create()
     {
-        $teachers = User::where('role', 'teacher')->get();
-        return view('admin.courses.create', compact('teachers'));
+        $lecturers = User::where('role', 'lecturer')->get();
+        return view('admin.courses.create', compact('lecturers'));
     }
 
     public function store(Request $request)
@@ -27,18 +27,18 @@ class CourseController extends Controller
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'teacher_id' => 'required|exists:users,id',
+            'lecturer_id' => 'required|exists:users,id',
         ]);
 
         Course::create($validated);
 
-        return redirect()->route('admin.courses.index')->with('success', 'Mata kuliah berhasil ditambahkan.');
+        return redirect()->route('admin.courses.index')->with('success', 'Course has been created.');
     }
 
     public function edit(Course $course)
     {
-        $teachers = User::where('role', 'teacher')->get();
-        return view('admin.courses.edit', compact('course', 'teachers'));
+        $lecturers = User::where('role', 'lecturer')->get();
+        return view('admin.courses.edit', compact('course', 'lecturers'));
     }
 
     public function update(Request $request, Course $course)
@@ -47,18 +47,18 @@ class CourseController extends Controller
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'teacher_id' => 'required|exists:users,id',
+            'lecturer_id' => 'required|exists:users,id',
         ]);
 
         $course->update($validated);
 
-        return redirect()->route('admin.courses.index')->with('success', 'Mata kuliah berhasil diperbarui.');
+        return redirect()->route('admin.courses.index')->with('success', 'Course has been updated.');
     }
 
     public function destroy(Course $course)
     {
         $course->delete();
 
-        return redirect()->route('admin.courses.index')->with('success', 'Mata kuliah berhasil dihapus.');
+        return redirect()->route('admin.courses.index')->with('success', 'Course has been deleted.');
     }
 }

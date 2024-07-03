@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Nilai Mahasiswa')
+@section('title', 'Student Grades')
 
 @section('content')
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h4 class="page-title">Nilai Mahasiswa</h4>
+                <h4 class="page-title">Student Grades</h4>
             </div>
             <div class="col-sm-6">
-                <ol class="breadcrumb float-right">
-                    <li class="breadcrumb-item active">Nilai Mahasiswa</li>
+                <ol class="float-right breadcrumb">
+                    <li class="breadcrumb-item active">Student Grades</li>
                 </ol>
             </div>
         </div>
@@ -26,9 +26,9 @@
                             <table id="grades-table-{{ $course->id }}" class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Nama Mahasiswa</th>
-                                        <th>Tugas</th>
-                                        <th>Nilai</th>
+                                        <th>Student Name</th>
+                                        <th>Assignment</th>
+                                        <th>Grade</th>
                                     </tr>
                                 </thead>
                                 <tbody>

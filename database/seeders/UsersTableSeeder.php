@@ -23,12 +23,12 @@ class UsersTableSeeder extends Seeder
             'role' => 'admin', // Mengisi kolom role dengan 'admin'
         ]);
 
-        // Teacher User
+        // Lecturer User
         User::create([
-            'name' => 'Teacher User',
-            'email' => 'teacher@example.com',
+            'name' => 'Lecturer User',
+            'email' => 'lecturer@example.com',
             'password' => Hash::make('password'),
-            'role' => 'teacher', // Mengisi kolom role dengan 'teacher'
+            'role' => 'lecturer', // Mengisi kolom role dengan 'lecturer'
         ]);
 
         // Student User

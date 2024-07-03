@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Mata Kuliah')
+@section('title', 'Course Details')
 
 @section('content')
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h4 class="page-title">Detail Mata Kuliah</h4>
+                <h4 class="page-title">Course Details</h4>
             </div>
             <div class="col-sm-6">
-                <ol class="breadcrumb float-right">
-                    <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('teacher.courses.index') }}">Daftar Mata Kuliah</a></li>
-                    <li class="breadcrumb-item active">Detail Mata Kuliah</li>
+                <ol class="float-right breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('lecturer.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('lecturer.courses.index') }}">Course List</a></li>
+                    <li class="breadcrumb-item active">Course Details</li>
                 </ol>
             </div>
         </div>
@@ -27,6 +27,28 @@
         </div>
     @endif
 
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-12">
             <div class="card m-b-30">
@@ -34,10 +56,10 @@
                     <h4 class="card-title">{{ $course->name }}</h4>
                     <p class="card-text">{{ $course->description }}</p>
 
-                    <h5>Mahasiswa yang Terdaftar</h5>
+                    <h5>Enrolled Students</h5>
                     <!-- Button to trigger modal -->
-                    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#studentsModal">
-                        Lihat Mahasiswa yang Terdaftar
+                    <button type="button" class="mb-3 btn btn-primary" data-toggle="modal" data-target="#studentsModal">
+                        View Enrolled Students
                     </button>
 
                     <!-- Students Modal -->
@@ -46,7 +68,7 @@
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="studentsModalLabel">Mahasiswa yang Terdaftar</h5>
+                                    <h5 class="modal-title" id="studentsModalLabel">Enrolled Students</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -56,7 +78,7 @@
                                         <table id="students-table" class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>Nama</th>
+                                                    <th>Name</th>
                                                     <th>Email</th>
                                                 </tr>
                                             </thead>
@@ -79,19 +101,19 @@
                     </div>
                     <!-- End Students Modal -->
 
-                    <h5>Bagian Kursus</h5>
+                    <h5>Course Sections</h5>
                     <!-- Button to trigger modal -->
-                    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addSectionModal">
-                        Tambah Bagian Kursus
+                    <button type="button" class="mb-3 btn btn-primary" data-toggle="modal" data-target="#addSectionModal">
+                        Add Course Section
                     </button>
                     <table id="sections-table" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Nama</th>
-                                <th>Deskripsi</th>
-                                <th>Materi</th>
-                                <th>Tugas</th>
-                                <th>Aksi</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Materials</th>
+                                <th>Assignments</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -100,12 +122,12 @@
                                     <td>{{ $section->name }}</td>
                                     <td>{{ $section->description }}</td>
                                     <td>
-                                        <a href="{{ route('teacher.sections.materials.index', $section->id) }}"
-                                            class="btn btn-info btn-sm">Materi Pembelajaran</a>
+                                        <a href="{{ route('lecturer.sections.materials.index', $section->id) }}"
+                                            class="btn btn-info btn-sm">Learning Materials</a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('teacher.sections.assignments.index', $section->id) }}"
-                                            class="btn btn-info btn-sm">Tugas</a>
+                                        <a href="{{ route('lecturer.sections.assignments.index', $section->id) }}"
+                                            class="btn btn-info btn-sm">Assignments</a>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
@@ -121,25 +143,25 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editSectionModalLabel">Edit Bagian Kursus</h5>
+                                                <h5 class="modal-title" id="editSectionModalLabel">Edit Course Section</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <form
-                                                action="{{ route('teacher.courses.updateSection', ['course' => $course->id, 'section' => $section->id]) }}"
+                                                action="{{ route('lecturer.courses.updateSection', ['course' => $course->id, 'section' => $section->id]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-body">
                                                     <div class="form-group">
-                                                        <label for="name">Nama Bagian</label>
+                                                        <label for="name">Section Name</label>
                                                         <input type="text" class="form-control" id="name"
                                                             name="name" value="{{ $section->name }}" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="description">Deskripsi</label>
+                                                        <label for="description">Description</label>
                                                         <textarea class="form-control" id="description" name="description" rows="3">{{ $section->description }}</textarea>
                                                     </div>
                                                 </div>
@@ -160,7 +182,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteSectionModalLabel">Hapus Bagian Kursus
+                                                <h5 class="modal-title" id="deleteSectionModalLabel">Delete Course Section
                                                 </h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
@@ -168,17 +190,17 @@
                                                 </button>
                                             </div>
                                             <form
-                                                action="{{ route('teacher.courses.deleteSection', ['course' => $course->id, 'section' => $section->id]) }}"
+                                                action="{{ route('lecturer.courses.deleteSection', ['course' => $course->id, 'section' => $section->id]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="modal-body">
-                                                    <p>Apakah Anda yakin ingin menghapus bagian kursus ini?</p>
+                                                    <p>Are you sure you want to delete this course section?</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -195,28 +217,28 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="addSectionModalLabel">Tambah Bagian Kursus</h5>
+                                    <h5 class="modal-title" id="addSectionModalLabel">Add Course Section</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="{{ route('teacher.courses.addSection', $course) }}" method="POST">
+                                <form action="{{ route('lecturer.courses.addSection', $course) }}" method="POST">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <label for="name">Nama Bagian</label>
+                                            <label for="name">Section Name</label>
                                             <input type="text" class="form-control" id="name" name="name"
                                                 required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="description">Deskripsi</label>
+                                            <label for="description">Description</label>
                                             <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Tambah</button>
+                                        <button type="submit" class="btn btn-primary">Add</button>
                                     </div>
                                 </form>
                             </div>

@@ -6,12 +6,12 @@
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h4 class="page-title">Pengguna</h4>
+                <h4 class="page-title">Users</h4>
             </div>
             <div class="col-sm-6">
-                <ol class="breadcrumb float-right">
+                <ol class="float-right breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Pengguna</li>
+                    <li class="breadcrumb-item active">Users</li>
                 </ol>
             </div>
         </div>
@@ -51,8 +51,8 @@
     @php
         $roles = [
             'admin' => 'Admin',
-            'teacher' => 'Dosen',
-            'student' => 'Mahasiswa',
+            'lecturer' => 'Lecturer',
+            'student' => 'Student',
         ];
     @endphp
 
@@ -60,9 +60,9 @@
         <div class="col-12">
             <div class="card m-b-30">
                 <div class="card-body">
-                    <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3">Tambah Pengguna</a>
-                    <button type="button" class="btn btn-secondary mb-3" data-toggle="modal"
-                        data-target="#importModal">Impor Pengguna</button>
+                    <a href="{{ route('admin.users.create') }}" class="mb-3 btn btn-primary">Add User</a>
+                    <button type="button" class="mb-3 btn btn-secondary" data-toggle="modal"
+                        data-target="#importModal">Import Users</button>
 
                     <!-- Import Modal -->
                     <div class="modal fade" id="importModal" tabindex="-1" role="dialog"
@@ -70,7 +70,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="importModalLabel">Impor Pengguna dari Excel</h5>
+                                    <h5 class="modal-title" id="importModalLabel">Import Users from Excel</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -80,14 +80,14 @@
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group">
-                                            <label for="file">Pilih file Excel</label>
+                                            <label for="file">Choose Excel file</label>
                                             <input type="file" class="form-control" id="file" name="file"
                                                 required>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Impor</button>
+                                                data-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-primary">Import</button>
                                         </div>
                                     </form>
                                 </div>
@@ -99,11 +99,11 @@
                     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>Foto Profil</th>
-                                <th>Nama</th>
+                                <th>Profile Photo</th>
+                                <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                <th>Aksi</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -123,10 +123,10 @@
                                     <td>{{ $roles[$user->role] ?? ucfirst($user->role) }}</td>
                                     <td>
                                         <a href="{{ route('admin.users.edit', $user->id) }}"
-                                            class="btn btn-primary btn-sm">Ubah</a>
+                                            class="btn btn-primary btn-sm">Edit</a>
                                         <!-- Button trigger delete modal -->
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#deleteUserModal{{ $user->id }}">Hapus</button>
+                                            data-target="#deleteUserModal{{ $user->id }}">Delete</button>
 
                                         <!-- Delete Modal -->
                                         <div class="modal fade" id="deleteUserModal{{ $user->id }}" tabindex="-1"
@@ -136,24 +136,23 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title"
-                                                            id="deleteUserModalLabel{{ $user->id }}">Hapus Pengguna
-                                                        </h5>
+                                                            id="deleteUserModalLabel{{ $user->id }}">Delete User</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        Apakah Anda yakin ingin menghapus pengguna ini?
+                                                        Are you sure you want to delete this user?
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Batal</button>
+                                                            data-dismiss="modal">Cancel</button>
                                                         <form action="{{ route('admin.users.destroy', $user->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
                                                         </form>
                                                     </div>
                                                 </div>

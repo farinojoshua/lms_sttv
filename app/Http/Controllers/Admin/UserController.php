@@ -28,7 +28,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:admin,teacher,student',
+            'role' => 'required|in:admin,lecturer,student',
             'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -39,7 +39,7 @@ class UserController extends Controller
         $validated['password'] = bcrypt($validated['password']);
         User::create($validated);
 
-        return redirect()->route('admin.users.index')->with('success', 'User berhasil ditambahkan.');
+        return redirect()->route('admin.users.index')->with('success', 'User has been created.');
     }
 
     public function edit(User $user)
@@ -53,7 +53,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
-            'role' => 'required|in:admin,teacher,student',
+            'role' => 'required|in:admin,lecturer,student',
             'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -72,7 +72,7 @@ class UserController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('admin.users.index')->with('success', 'User berhasil diupdate.');
+        return redirect()->route('admin.users.index')->with('success', 'User has been updated.');
     }
 
     public function destroy(User $user)
@@ -81,7 +81,7 @@ class UserController extends Controller
             Storage::delete('public/' . $user->profile_photo_path);
         }
         $user->delete();
-        return redirect()->route('admin.users.index')->with('success', 'User berhasil dihapus.');
+        return redirect()->route('admin.users.index')->with('success', 'User has been deleted.');
     }
 
     public function import(Request $request)
@@ -92,6 +92,6 @@ class UserController extends Controller
 
         Excel::import(new UsersImport, $request->file('file'));
 
-        return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil diimpor.');
+        return redirect()->route('admin.users.index')->with('success', 'Users have been imported.');
     }
 }

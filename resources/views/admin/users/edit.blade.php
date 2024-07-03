@@ -10,10 +10,10 @@
                     <h4 class="page-title">Edit User</h4>
                 </div>
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-right">
+                    <ol class="float-right breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Pengguna</a></li>
-                        <li class="breadcrumb-item active">Ubah</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Users</a></li>
+                        <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
             </div>
@@ -76,12 +76,11 @@
                                 <label for="password" class="col-sm-2 col-form-label">Password</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" type="password" name="password" id="password">
-                                    <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah password</small>
+                                    <small class="form-text text-muted">Leave blank if you do not want to change the password</small>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="password_confirmation" class="col-sm-2 col-form-label">Konfirmasi
-                                    Password</label>
+                                <label for="password_confirmation" class="col-sm-2 col-form-label">Confirm Password</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" type="password" name="password_confirmation"
                                         id="password_confirmation">
@@ -92,26 +91,24 @@
                                 <div class="col-sm-10">
                                     <select class="form-control" name="role" id="role" required>
                                         <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                                        <option value="teacher" {{ $user->role == 'teacher' ? 'selected' : '' }}>Dosen
-                                        </option>
-                                        <option value="student" {{ $user->role == 'student' ? 'selected' : '' }}>Mahasiswa
-                                        </option>
+                                        <option value="lecturer" {{ $user->role == 'lecturer' ? 'selected' : '' }}>Lecturer</option>
+                                        <option value="student" {{ $user->role == 'student' ? 'selected' : '' }}>Student</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="profile_photo" class="col-sm-2 col-form-label">Foto Profil</label>
+                                <label for="profile_photo" class="col-sm-2 col-form-label">Profile Photo</label>
                                 <div class="col-sm-10">
                                     <input type="file" class="form-control" name="profile_photo" id="profile_photo">
                                     @if ($user->profile_photo_path)
                                         <img src="{{ asset('storage/' . $user->profile_photo_path) }}" alt="Profile Photo"
-                                            class="img-thumbnail mt-2" width="150">
+                                            class="mt-2 img-thumbnail" width="150">
                                     @endif
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10 offset-sm-2">
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                         </form>

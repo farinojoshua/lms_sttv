@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Mata Kuliah yang Diambil')
+@section('title', 'Enrolled Courses')
 
 @section('content')
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h4 class="page-title">Mata Kuliah yang Diambil</h4>
+                <h4 class="page-title">Enrolled Courses</h4>
             </div>
             <div class="col-sm-6">
-                <ol class="breadcrumb float-right">
+                <ol class="float-right breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Mata Kuliah yang Diambil</li>
+                    <li class="breadcrumb-item active">Enrolled Courses</li>
                 </ol>
             </div>
         </div>
@@ -24,11 +24,11 @@
                     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>Nama</th>
-                                <th>Kode</th>
-                                <th>Deskripsi</th>
-                                <th>Dosen</th>
-                                <th>Aksi</th>
+                                <th>Name</th>
+                                <th>Code</th>
+                                <th>Description</th>
+                                <th>Lecturer</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,10 +37,9 @@
                                     <td>{{ $course->name }}</td>
                                     <td>{{ $course->code }}</td>
                                     <td>{{ $course->description }}</td>
-                                    <td>{{ $course->teacher ? $course->teacher->name : 'Tidak ada dosen' }}</td>
+                                    <td>{{ $course->lecturer ? $course->lecturer->name : 'No lecturer' }}</td>
                                     <td>
-                                        <a href="{{ route('student.courses.show', $course->id) }}"
-                                            class="btn btn-primary btn-sm">Detail</a>
+                                        <a href="{{ route('student.courses.show', $course->id) }}" class="btn btn-primary btn-sm">Detail</a>
                                     </td>
                                 </tr>
                             @endforeach
