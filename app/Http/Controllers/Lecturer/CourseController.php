@@ -30,7 +30,6 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
-        // Mendapatkan mahasiswa yang terdaftar di kursus
         $enrollments = Enrollment::where('course_id', $course->id)->with('student')->get();
         $sections = CourseSection::where('course_id', $course->id)->get();
 
