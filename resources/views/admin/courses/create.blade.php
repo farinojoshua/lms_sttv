@@ -74,6 +74,16 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="semester" class="col-sm-2 col-form-label">Semester</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="semester" id="semester" required>
+                                    @foreach (\App\Helpers\SemesterHelper::getSemesters() as $semester)
+                                        <option value="{{ $semester }}">{{ $semester }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="lecturer_id" class="col-sm-2 col-form-label">Lecturer</label>
                             <div class="col-sm-10">
                                 <select class="form-control" name="lecturer_id" id="lecturer_id" required>

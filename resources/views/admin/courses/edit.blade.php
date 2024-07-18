@@ -62,20 +62,33 @@
                                 <label for="name" class="col-sm-2 col-form-label">Course Name</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" type="text" name="name" value="{{ $course->name }}"
-                                        id="name">
+                                        id="name" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="code" class="col-sm-2 col-form-label">Course Code</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" type="text" name="code" value="{{ $course->code }}"
-                                        id="code">
+                                        id="code" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="description" class="col-sm-2 col-form-label">Description</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" name="description" id="description">{{ $course->description }}</textarea>
+                                    <textarea class="form-control" name="description" id="description" rows="4">{{ $course->description }}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="semester" class="col-sm-2 col-form-label">Semester</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="semester" id="semester" required>
+                                        @foreach (\App\Helpers\SemesterHelper::getSemesters() as $semester)
+                                            <option value="{{ $semester }}"
+                                                {{ $semester == $course->semester ? 'selected' : '' }}>
+                                                {{ $semester }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -85,7 +98,8 @@
                                         @foreach ($lecturers as $lecturer)
                                             <option value="{{ $lecturer->id }}"
                                                 {{ $lecturer->id == $course->lecturer_id ? 'selected' : '' }}>
-                                                {{ $lecturer->name }}</option>
+                                                {{ $lecturer->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>

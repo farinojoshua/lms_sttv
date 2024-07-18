@@ -32,14 +32,14 @@ class CourseController extends Controller
             'course_id' => $course->id,
         ]);
 
-        return redirect()->route('student.courses.enrolled')->with('success', 'Anda berhasil mendaftar ke mata kuliah ini.');
+        return redirect()->route('student.courses.enrolled')->with('success', 'You have successfully enrolled in this course.');
     }
 
     public function unenroll(Course $course)
     {
         Enrollment::where('student_id', Auth::id())->where('course_id', $course->id)->delete();
 
-        return redirect()->route('student.courses.enrolled')->with('success', 'Anda berhasil membatalkan pendaftaran dari mata kuliah ini.');
+        return redirect()->route('student.courses.enrolled')->with('success', 'You have successfully unenrolled from this course.');
     }
 
     public function enrolled()

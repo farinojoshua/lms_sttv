@@ -19,7 +19,7 @@ class SubmissionController extends Controller
     {
         if (now()->greaterThan($assignment->due_date)) {
             return redirect()->route('student.assignments.show', [$assignment->section->id, $assignment->id])
-                ->with('error', 'Batas waktu pengumpulan tugas telah lewat.');
+                ->with('error', 'Sorry, the submission deadline has passed.');
         }
 
         $request->validate([
@@ -35,7 +35,7 @@ class SubmissionController extends Controller
         ]);
 
         return redirect()->route('student.assignments.show', [$assignment->section->id, $assignment->id])
-            ->with('success', 'Tugas berhasil dikumpulkan.');
+            ->with('success', 'Assignment submitted successfully.');
     }
 
     public function edit(Submission $submission)
@@ -47,7 +47,7 @@ class SubmissionController extends Controller
     {
         if (now()->greaterThan($submission->assignment->due_date)) {
             return redirect()->route('student.assignments.show', [$submission->assignment->section->id, $submission->assignment->id])
-                ->with('error', 'Batas waktu pengumpulan tugas telah lewat.');
+                ->with('error', 'Sorry, the submission deadline has passed.');
         }
 
         $request->validate([

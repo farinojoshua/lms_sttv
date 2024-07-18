@@ -28,6 +28,7 @@ class CourseController extends Controller
             'code' => 'required|string|max:255',
             'description' => 'nullable|string',
             'lecturer_id' => 'required|exists:users,id',
+            'semester' => 'nullable|string',
         ]);
 
         Course::create($validated);
@@ -48,6 +49,7 @@ class CourseController extends Controller
             'code' => 'required|string|max:255',
             'description' => 'nullable|string',
             'lecturer_id' => 'required|exists:users,id',
+            'semester' => 'nullable|string',
         ]);
 
         $course->update($validated);

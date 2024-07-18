@@ -25,7 +25,7 @@ class MaterialController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,jpg,jpeg,png|max:10240',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,txt,ppt,pptx,mp4,avi,mp3,wav,jpg,jpeg,png|max:10240',
         ]);
 
         $filePath = $request->file('file') ? $request->file('file')->store('materials', 'public') : null;
@@ -37,7 +37,7 @@ class MaterialController extends Controller
             'file_path' => $filePath,
         ]);
 
-        return redirect()->route('lecturer.sections.materials.index', $section)->with('success', 'Materi berhasil ditambahkan.');
+        return redirect()->route('lecturer.sections.materials.index', $section)->with('success', 'Learning material has been created.');
     }
 
     public function edit(CourseSection $section, Material $material)
@@ -50,7 +50,7 @@ class MaterialController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,jpg,jpeg,png|max:10240',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,txt,ppt,pptx,mp4,avi,mp3,wav,jpg,jpeg,png|max:10240',
         ]);
 
         if ($request->file('file')) {
@@ -62,12 +62,12 @@ class MaterialController extends Controller
         $material->description = $request->description;
         $material->save();
 
-        return redirect()->route('lecturer.sections.materials.index', $section)->with('success', 'Materi berhasil diperbarui.');
+        return redirect()->route('lecturer.sections.materials.index', $section)->with('success', 'Learning material has been updated.');
     }
 
     public function destroy(CourseSection $section, Material $material)
     {
         $material->delete();
-        return redirect()->route('lecturer.sections.materials.index', $section)->with('success', 'Materi berhasil dihapus.');
+        return redirect()->route('lecturer.sections.materials.index', $section)->with('success', 'Learning material has been deleted.');
     }
 }

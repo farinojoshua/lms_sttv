@@ -8,15 +8,24 @@ use App\Models\Course;
 use App\Models\CourseSection;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\SemesterHelper;
 
 class CourseController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Mendapatkan kursus yang diajar oleh dosen yang sedang login
-        $courses = Course::where('lecturer_id', Auth::id())->get();
+        $semesters = SemesterHelper::getSemesters();
+        $selectedSemester = $request->get('semester', SemesterHelper::getCurrentSemester());
 
-        return view('lecturer.courses.index', compact('courses'));
+        $query = Course::where('lecturer_id', Auth::id());
+
+        if ($selectedSemester) {
+            $query->where('semester', $selectedSemester);
+        }
+
+        $courses = $query->get();
+
+        return view('lecturer.courses.index', compact('courses', 'semesters', 'selectedSemester'));
     }
 
     public function show(Course $course)
@@ -41,7 +50,7 @@ class CourseController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('lecturer.courses.show', $course)->with('success', 'Bagian kursus berhasil ditambahkan.');
+        return redirect()->route('lecturer.courses.show', $course)->with('success', 'Course section has been added.');
     }
 
     public function editSection(Course $course, CourseSection $section)
@@ -61,13 +70,13 @@ class CourseController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('lecturer.courses.show', $course)->with('success', 'Bagian kursus berhasil diperbarui.');
+        return redirect()->route('lecturer.courses.show', $course)->with('success', 'Course section has been updated.');
     }
 
     public function deleteSection(Course $course, CourseSection $section)
     {
         $section->delete();
 
-        return redirect()->route('lecturer.courses.show', $course)->with('success', 'Bagian kursus berhasil dihapus.');
+        return redirect()->route('lecturer.courses.show', $course)->with('success', 'Course section has been deleted.');
     }
 }

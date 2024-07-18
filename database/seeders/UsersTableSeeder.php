@@ -15,28 +15,11 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // Admin User
         User::create([
             'name' => 'Admin User',
-            'email' => 'admin@example.com',
+            'email' => 'admin@sttvictory.ac.id',
             'password' => Hash::make('password'),
-            'role' => 'admin', // Mengisi kolom role dengan 'admin'
-        ]);
-
-        // Lecturer User
-        User::create([
-            'name' => 'Lecturer User',
-            'email' => 'lecturer@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'lecturer', // Mengisi kolom role dengan 'lecturer'
-        ]);
-
-        // Student User
-        User::create([
-            'name' => 'Student User',
-            'email' => 'student@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'student', // Mengisi kolom role dengan 'student'
+            'role' => 'admin',
         ]);
     }
 }
