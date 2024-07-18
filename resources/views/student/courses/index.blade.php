@@ -30,13 +30,28 @@
         <div class="col-12">
             <div class="card m-b-30">
                 <div class="card-body">
+                    <form method="GET" action="{{ route('student.courses.index') }}" class="mb-3 form-inline">
+                        <div class="mr-3 form-group">
+                            <label for="semester" class="mr-2">Filter by Semester:</label>
+                            <select name="semester" id="semester" class="form-control">
+                                <option value="">All Semesters</option>
+                                @foreach ($semesters as $semester)
+                                    <option value="{{ $semester }}" {{ $semester == $selectedSemester ? 'selected' : '' }}>
+                                        {{ $semester }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                    </form>
+
                     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Code</th>
-                                <th>Description</th>
                                 <th>Lecturer</th>
+                                <th>Semester</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -45,8 +60,8 @@
                                 <tr>
                                     <td>{{ $course->name }}</td>
                                     <td>{{ $course->code }}</td>
-                                    <td>{{ $course->description }}</td>
                                     <td>{{ $course->lecturer->name }}</td>
+                                    <td>{{ $course->semester }}</td>
                                     <td>
                                         <form action="{{ route('student.courses.enroll', $course->id) }}" method="POST">
                                             @csrf

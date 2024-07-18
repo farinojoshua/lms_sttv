@@ -6,13 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Helpers\SemesterHelper;
 
 class CourseController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::with('lecturer')->get();
-        return view('admin.courses.index', compact('courses'));
+        $semesters = SemesterHelper::getSemesters();
+        $selectedSemester = $request->get('semester', SemesterHelper::getCurrentSemester());
+
+        $query = Course::with('lecturer');
+
+        if ($selectedSemester) {
+            $query->where('semester', $selectedSemester);
+        }
+
+        $courses = $query->get();
+
+        return view('admin.courses.index', compact('courses', 'semesters', 'selectedSemester'));
     }
 
     public function create()

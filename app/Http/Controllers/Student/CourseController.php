@@ -7,15 +7,26 @@ use App\Models\Course;
 use App\Models\CourseSection;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\SemesterHelper;
+use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $enrolledCourseIds = Enrollment::where('student_id', Auth::id())->pluck('course_id');
-        $courses = Course::whereNotIn('id', $enrolledCourseIds)->get();
+        $semesters = SemesterHelper::getSemesters();
+        $selectedSemester = $request->get('semester', SemesterHelper::getCurrentSemester());
 
-        return view('student.courses.index', compact('courses'));
+        $enrolledCourseIds = Enrollment::where('student_id', Auth::id())->pluck('course_id');
+        $query = Course::whereNotIn('id', $enrolledCourseIds);
+
+        if ($selectedSemester) {
+            $query->where('semester', $selectedSemester);
+        }
+
+        $courses = $query->get();
+
+        return view('student.courses.index', compact('courses', 'semesters', 'selectedSemester'));
     }
 
     public function show(Course $course)
@@ -42,10 +53,21 @@ class CourseController extends Controller
         return redirect()->route('student.courses.enrolled')->with('success', 'You have successfully unenrolled from this course.');
     }
 
-    public function enrolled()
+    public function enrolled(Request $request)
     {
-        $courses = Enrollment::where('student_id', Auth::id())->with('course.lecturer')->get()->pluck('course');
+        $semesters = SemesterHelper::getSemesters();
+        $selectedSemester = $request->get('semester', SemesterHelper::getCurrentSemester());
 
-        return view('student.courses.enrolled', compact('courses'));
+        $query = Enrollment::where('student_id', Auth::id())->with('course.lecturer');
+
+        if ($selectedSemester) {
+            $query->whereHas('course', function ($q) use ($selectedSemester) {
+                $q->where('semester', $selectedSemester);
+            });
+        }
+
+        $courses = $query->get()->pluck('course');
+
+        return view('student.courses.enrolled', compact('courses', 'semesters', 'selectedSemester'));
     }
 }

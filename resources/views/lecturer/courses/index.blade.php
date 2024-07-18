@@ -41,7 +41,7 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Code</th>
-                                <th>Description</th>
+                                <th>Semester</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -50,7 +50,7 @@
                                 <tr>
                                     <td>{{ $course->name }}</td>
                                     <td>{{ $course->code }}</td>
-                                    <td>{{ $course->description }}</td>
+                                    <td>{{ $course->semester }}</td>
                                     <td>
                                         <a href="{{ route('lecturer.courses.show', $course->id) }}" class="btn btn-primary btn-sm">Details</a>
                                     </td>
