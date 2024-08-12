@@ -18,6 +18,11 @@ class Quiz extends Model
         'end_time',
     ];
 
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+    ];
+
     public function section()
     {
         return $this->belongsTo(CourseSection::class, 'section_id');

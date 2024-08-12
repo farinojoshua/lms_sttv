@@ -17,6 +17,7 @@ use App\Http\Controllers\Lecturer\DashboardController as LecturerDashboardContro
 use App\Http\Controllers\Student\AssignmentController as StudentAssignmentController;
 use App\Http\Controllers\Student\SubmissionController as StudentSubmissionController;
 use App\Http\Controllers\Lecturer\AssignmentController as LecturerAssignmentController;
+use App\Http\Controllers\Lecturer\QuizController as LecturerQuizController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -61,6 +62,7 @@ Route::middleware([
         Route::get('sections/{section}/assignments/{assignment}/submissions', [LecturerAssignmentController::class, 'showSubmissions'])->name('sections.assignments.submissions');
         Route::post('submissions/{submission}/grade', [LecturerAssignmentController::class, 'grade'])->name('submissions.grade');
         Route::get('grades', [LecturerGradeController::class, 'index'])->name('grades.index');
+        Route::resource('sections.quizzes', LecturerQuizController::class);
     });
 
 

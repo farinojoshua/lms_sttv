@@ -113,6 +113,7 @@
                                 <th>Description</th>
                                 <th>Materials</th>
                                 <th>Assignments</th>
+                                <th>Quizzes</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -128,6 +129,9 @@
                                     <td>
                                         <a href="{{ route('lecturer.sections.assignments.index', $section->id) }}"
                                             class="btn btn-info btn-sm">Assignments</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('lecturer.sections.quizzes.index', $section->id) }}" class="btn btn-info btn-sm">Quizzes</a>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
