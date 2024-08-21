@@ -30,4 +30,9 @@ class CourseSection extends Model
     {
         return $this->hasMany(Assignment::class, 'section_id');
     }
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class, 'section_id');
+    }
 }

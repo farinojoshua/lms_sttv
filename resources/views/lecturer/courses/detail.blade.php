@@ -10,82 +10,19 @@
             </div>
             <div class="col-sm-6">
                 <ol class="float-right breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('student.courses.enrolled') }}">Enrolled Courses</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('lecturer.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('lecturer.courses.all') }}">All Courses</a></li>
                     <li class="breadcrumb-item active">Course Details</li>
                 </ol>
             </div>
         </div>
     </div>
 
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
-    @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('error') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
     <div class="mb-4 card">
         <div class="card-body">
             <h4 class="card-title">{{ $course->name }}</h4>
             <p class="card-text">{{ $course->description }}</p>
             <p class="card-text"><strong>Lecturer:</strong> {{ $course->lecturer->name }}</p>
-
-            <!-- Button to trigger unenroll modal -->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#unenrollModal">
-                Unenroll
-            </button>
-
-            <!-- Unenroll Modal -->
-            <div class="modal fade" id="unenrollModal" tabindex="-1" role="dialog" aria-labelledby="unenrollModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="unenrollModalLabel">Unenroll</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form action="{{ route('student.courses.unenroll', $course->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <div class="modal-body">
-                                <p>Are you sure you want to unenroll from this course?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-danger">Unenroll</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- End Unenroll Modal -->
         </div>
     </div>
 
@@ -115,7 +52,7 @@
                             <ul class="mb-3 list-group">
                                 @foreach ($section->materials as $material)
                                     <li class="list-group-item">
-                                        <a href="{{ route('student.materials.show', ['section' => $section->id, 'material' => $material->id]) }}"
+                                        <a href="{{ route('lecturer.materials.show', ['section' => $section->id, 'material' => $material->id]) }}"
                                             class="btn btn-sm btn-primary">
                                             <i class="fa fa-file"></i> {{ $material->title }}
                                         </a>
@@ -131,7 +68,7 @@
                             <ul class="list-group">
                                 @foreach ($section->assignments as $assignment)
                                     <li class="list-group-item">
-                                        <a href="{{ route('student.assignments.show', ['section' => $section->id, 'assignment' => $assignment->id]) }}"
+                                        <a href="{{ route('lecturer.assignments.show', ['section' => $section->id, 'assignment' => $assignment->id]) }}"
                                             class="btn btn-sm btn-primary">
                                             <i class="fa fa-tasks"></i> {{ $assignment->title }}
                                         </a>
@@ -147,7 +84,7 @@
                             <ul class="mb-3 list-group">
                                 @foreach ($section->quizzes as $quiz)
                                     <li class="list-group-item">
-                                        <a href="{{ route('student.quizzes.show', ['section' => $section->id, 'quiz' => $quiz->id]) }}" class="btn btn-sm btn-primary">
+                                        <a href="{{ route('lecturer.quizzes.show', ['section' => $section->id, 'quiz' => $quiz->id]) }}" class="btn btn-sm btn-primary">
                                             <i class="fa fa-question-circle"></i> {{ $quiz->title }}
                                         </a>
                                     </li>
