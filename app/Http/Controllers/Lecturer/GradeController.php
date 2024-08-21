@@ -11,9 +11,10 @@ class GradeController extends Controller
     public function index()
     {
         $courses = Course::where('lecturer_id', Auth::id())
-                        ->with(['sections.assignments.submissions.student'])
+                        ->with(['sections.assignments.submissions.student', 'sections.quizzes.submissions.student'])
                         ->get();
 
         return view('lecturer.grades.index', compact('courses'));
     }
 }
+

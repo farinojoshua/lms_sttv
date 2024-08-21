@@ -27,7 +27,7 @@
                                 <thead>
                                     <tr>
                                         <th>Student Name</th>
-                                        <th>Assignment</th>
+                                        <th>Item</th>
                                         <th>Grade</th>
                                     </tr>
                                 </thead>
@@ -37,8 +37,17 @@
                                             @foreach ($assignment->submissions as $submission)
                                                 <tr>
                                                     <td>{{ $submission->student->name }}</td>
-                                                    <td>{{ $assignment->title }}</td>
+                                                    <td>{{ $assignment->title }} (Assignment)</td>
                                                     <td>{{ $submission->grade }}</td>
+                                                </tr>
+                                            @endforeach
+                                        @endforeach
+                                        @foreach ($section->quizzes as $quiz)
+                                            @foreach ($quiz->submissions as $submission)
+                                                <tr>
+                                                    <td>{{ $submission->student->name }}</td>
+                                                    <td>{{ $quiz->title }} (Quiz)</td>
+                                                    <td>{{ $submission->score }}</td>
                                                 </tr>
                                             @endforeach
                                         @endforeach

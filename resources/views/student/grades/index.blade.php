@@ -27,17 +27,25 @@
                                 <tr>
                                     <th>Course</th>
                                     <th>Section</th>
-                                    <th>Assignment</th>
+                                    <th>Item</th>
                                     <th>Grade</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($submissions as $submission)
+                                @foreach ($assignmentSubmissions as $submission)
                                     <tr>
                                         <td>{{ $submission->assignment->section->course->name }}</td>
                                         <td>{{ $submission->assignment->section->name }}</td>
-                                        <td>{{ $submission->assignment->title }}</td>
+                                        <td>{{ $submission->assignment->title }} (Assignment)</td>
                                         <td>{{ $submission->grade }}</td>
+                                    </tr>
+                                @endforeach
+                                @foreach ($quizSubmissions as $submission)
+                                    <tr>
+                                        <td>{{ $submission->quiz->section->course->name }}</td>
+                                        <td>{{ $submission->quiz->section->name }}</td>
+                                        <td>{{ $submission->quiz->title }} (Quiz)</td>
+                                        <td>{{ $submission->score }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
