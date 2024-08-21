@@ -36,6 +36,28 @@ class CourseController extends Controller
         return view('lecturer.courses.show', compact('course', 'enrollments', 'sections'));
     }
 
+    public function allCourses(Request $request)
+    {
+        $semesters = SemesterHelper::getSemesters();
+        $selectedSemester = $request->get('semester', SemesterHelper::getCurrentSemester());
+
+        $courses = Course::when($selectedSemester, function ($query) use ($selectedSemester) {
+                            $query->where('semester', $selectedSemester);
+                        })
+                        ->get();
+
+        return view('lecturer.courses.all', compact('courses', 'semesters', 'selectedSemester'));
+    }
+
+    public function detail(Course $course)
+    {
+        $sections = CourseSection::where('course_id', $course->id)
+                                ->with(['assignments', 'materials', 'quizzes'])
+                                ->get();
+
+        return view('lecturer.courses.detail', compact('course', 'sections'));
+    }
+
     public function addSection(Request $request, Course $course)
     {
         $request->validate([

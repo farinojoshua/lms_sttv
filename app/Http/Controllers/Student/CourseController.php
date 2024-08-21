@@ -27,10 +27,20 @@ class CourseController extends Controller
         return view('student.courses.index', compact('courses', 'semesters', 'selectedSemester'));
     }
 
+    public function detail(Course $course)
+    {
+        $sections = CourseSection::where('course_id', $course->id)
+                                ->with(['assignments', 'materials', 'quizzes'])
+                                ->get();
+
+        return view('student.courses.detail', compact('course', 'sections'));
+    }
+
+
     public function show(Course $course)
     {
         $sections = CourseSection::where('course_id', $course->id)
-                                 ->with('assignments', 'materials')
+                                 ->with(['assignments', 'materials', 'quizzes']) // Pastikan quizzes ikut dimuat
                                  ->get();
 
         return view('student.courses.show', compact('course', 'sections'));

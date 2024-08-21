@@ -1,36 +1,27 @@
 @extends('layouts.app')
 
-@section('title', 'Course List')
+@section('title', 'All Courses')
 
 @section('content')
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h4 class="page-title">Course List</h4>
+                <h4 class="page-title">All Courses</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="float-right breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Course List</li>
+                    <li class="breadcrumb-item"><a href="{{ route('lecturer.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">All Courses</li>
                 </ol>
             </div>
         </div>
     </div>
 
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
     <div class="row">
         <div class="col-12">
             <div class="card m-b-30">
                 <div class="card-body">
-                    <form method="GET" action="{{ route('student.courses.index') }}" class="mb-3 form-inline">
+                    <form method="GET" action="{{ route('lecturer.courses.all') }}" class="mb-3 form-inline">
                         <div class="mr-3 form-group">
                             <label for="semester" class="mr-2">Filter by Semester:</label>
                             <select name="semester" id="semester" class="form-control">
@@ -63,11 +54,7 @@
                                     <td>{{ $course->lecturer->name }}</td>
                                     <td>{{ $course->semester }}</td>
                                     <td>
-                                        <form action="{{ route('student.courses.enroll', $course->id) }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary btn-sm">Enroll</button>
-                                        </form>
-                                        <a href="{{ route('student.courses.detail', $course->id) }}" class="btn btn-primary btn-sm">Detail</a>
+                                        <a href="{{ route('lecturer.courses.detail', $course->id) }}" class="btn btn-primary btn-sm">Detail</a>
                                     </td>
                                 </tr>
                             @endforeach

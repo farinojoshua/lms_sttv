@@ -17,6 +17,8 @@ use App\Http\Controllers\Lecturer\DashboardController as LecturerDashboardContro
 use App\Http\Controllers\Student\AssignmentController as StudentAssignmentController;
 use App\Http\Controllers\Student\SubmissionController as StudentSubmissionController;
 use App\Http\Controllers\Lecturer\AssignmentController as LecturerAssignmentController;
+use App\Http\Controllers\Lecturer\QuizController as LecturerQuizController;
+use App\Http\Controllers\Student\QuizController as StudentQuizController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -52,6 +54,8 @@ Route::middleware([
     Route::prefix('lecturer')->name('lecturer.')->middleware('role:lecturer')->group(function () {
         Route::get('dashboard', [LecturerDashboardController::class, 'index'])->name('dashboard');
         Route::resource('courses', LecturerCourseController::class)->only(['index', 'show']);
+        Route::get('course/all', [LecturerCourseController::class, 'allCourses'])->name('courses.all');
+        Route::get('courses/{course}/detail', [LecturerCourseController::class, 'detail'])->name('courses.detail');
         Route::post('courses/{course}/sections', [LecturerCourseController::class, 'addSection'])->name('courses.addSection');
         Route::get('courses/{course}/sections/{section}/edit', [LecturerCourseController::class, 'editSection'])->name('courses.editSection');
         Route::put('courses/{course}/sections/{section}', [LecturerCourseController::class, 'updateSection'])->name('courses.updateSection');
@@ -61,12 +65,14 @@ Route::middleware([
         Route::get('sections/{section}/assignments/{assignment}/submissions', [LecturerAssignmentController::class, 'showSubmissions'])->name('sections.assignments.submissions');
         Route::post('submissions/{submission}/grade', [LecturerAssignmentController::class, 'grade'])->name('submissions.grade');
         Route::get('grades', [LecturerGradeController::class, 'index'])->name('grades.index');
+        Route::resource('sections.quizzes', LecturerQuizController::class);
     });
 
 
     Route::prefix('student')->name('student.')->middleware('role:student')->group(function () {
         Route::get('dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
         Route::resource('courses', StudentCourseController::class)->only(['index', 'show']);
+        Route::get('courses/{course}/detail', [StudentCourseController::class, 'detail'])->name('courses.detail');
         Route::get('enrolled-courses', [StudentCourseController::class, 'enrolled'])->name('courses.enrolled');
         Route::post('courses/{course}/enroll', [StudentCourseController::class, 'enroll'])->name('courses.enroll');
         Route::delete('courses/{course}/unenroll', [StudentCourseController::class, 'unenroll'])->name('courses.unenroll');
@@ -79,6 +85,11 @@ Route::middleware([
         Route::get('submissions/{submission}/edit', [StudentSubmissionController::class, 'edit'])->name('submissions.edit');
         Route::put('submissions/{submission}/update', [StudentSubmissionController::class, 'update'])->name('submissions.update');
         Route::get('grades', [StudentGradeController::class, 'index'])->name('grades.index');
+
+        Route::get('quizzes', [StudentQuizController::class, 'index'])->name('quizzes.index');
+        Route::get('quizzes/{quiz}', [StudentQuizController::class, 'show'])->name('quizzes.show');
+        Route::post('quizzes/{quiz}/submit', [StudentQuizController::class, 'submit'])->name('quizzes.submit');
+        Route::get('quizzes/{quiz}/result', [StudentQuizController::class, 'result'])->name('quizzes.result');
     });
 
 

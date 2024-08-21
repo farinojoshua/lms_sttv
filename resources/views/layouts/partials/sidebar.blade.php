@@ -26,13 +26,18 @@
                             <i class="icon-people"></i><span> Users </span>
                         </a>
                     </li>
-                @elseif ($role == 'lecturer')
+                    @elseif ($role == 'lecturer')
                     @php
                         $lecturerCourseActive = request()->routeIs('lecturer.courses.*') || request()->routeIs('lecturer.sections.*');
                     @endphp
+                    <li class="{{ request()->routeIs('lecturer.courses.all') ? 'active' : '' }}">
+                        <a href="{{ route('lecturer.courses.all') }}" class="waves-effect">
+                            <i class="icon-paper-sheet"></i><span> All Courses </span>
+                        </a>
+                    </li>
                     <li class="{{ $lecturerCourseActive ? 'active' : '' }}">
                         <a href="{{ route('lecturer.courses.index') }}" class="waves-effect">
-                            <i class="icon-paper-sheet"></i><span> Courses </span>
+                            <i class="icon-paper-sheet"></i><span> My Courses </span>
                         </a>
                     </li>
                     <li class="{{ request()->routeIs('lecturer.grades.index') ? 'active' : '' }}">
