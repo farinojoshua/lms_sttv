@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Course List')
+@section('title', 'My Courses')
 
 @section('content')
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h4 class="page-title">Course List</h4>
+                <h4 class="page-title">My Courses</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="float-right breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('lecturer.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Course List</li>
+                    <li class="breadcrumb-item active">My Courses</li>
                 </ol>
             </div>
         </div>
@@ -21,7 +21,7 @@
         <div class="col-12">
             <div class="card m-b-30">
                 <div class="card-body">
-                    <form method="GET" action="{{ route('lecturer.courses.index') }}" class="mb-3 form-inline">
+                    <form method="GET" action="{{ route('lecturer.courses.myCourses') }}" class="mb-3 form-inline">
                         <div class="mr-3 form-group">
                             <label for="semester" class="mr-2">Filter by Semester:</label>
                             <select name="semester" id="semester" class="form-control">
@@ -52,7 +52,7 @@
                                     <td>{{ $course->code }}</td>
                                     <td>{{ $course->semester }}</td>
                                     <td>
-                                        <a href="{{ route('lecturer.courses.show', $course->id) }}" class="btn btn-primary btn-sm">Details</a>
+                                        <a href="{{ route('lecturer.courses.showMyCourse', $course->id) }}" class="btn btn-primary btn-sm">Details</a>
                                     </td>
                                 </tr>
                             @endforeach

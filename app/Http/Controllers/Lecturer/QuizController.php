@@ -11,7 +11,7 @@ class QuizController extends Controller
 {
     public function index(CourseSection $section)
     {
-        $quizzes = Quiz::where('section_id', $section->id)->get();
+        $quizzes = $section->quizzes;
         return view('lecturer.quizzes.index', compact('section', 'quizzes'));
     }
 
@@ -33,22 +33,10 @@ class QuizController extends Controller
             'questions.*.correct_answer' => 'required|string',
         ]);
 
-        // Buat kuis
-        $quiz = Quiz::create([
-            'section_id' => $section->id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-        ]);
+        $quiz = $section->quizzes()->create($request->only('title', 'description', 'start_time', 'end_time'));
 
-        // Tambah pertanyaan
         foreach ($request->questions as $questionData) {
-            $quiz->questions()->create([
-                'question' => $questionData['question'],
-                'options' => $questionData['options'],
-                'correct_answer' => $questionData['correct_answer'],
-            ]);
+            $quiz->questions()->create($questionData);
         }
 
         return redirect()->route('lecturer.sections.quizzes.index', $section)->with('success', 'Quiz and questions have been created successfully.');
@@ -72,22 +60,10 @@ class QuizController extends Controller
             'questions.*.correct_answer' => 'required|string',
         ]);
 
-        // Update quiz details
-        $quiz->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-        ]);
+        $quiz->update($request->only('title', 'description', 'start_time', 'end_time'));
 
-        // Update questions
         foreach ($request->questions as $index => $questionData) {
-            $question = $quiz->questions[$index];
-            $question->update([
-                'question' => $questionData['question'],
-                'options' => $questionData['options'],
-                'correct_answer' => $questionData['correct_answer'],
-            ]);
+            $quiz->questions[$index]->update($questionData);
         }
 
         return redirect()->route('lecturer.sections.quizzes.index', $section)->with('success', 'Quiz and questions have been updated successfully.');

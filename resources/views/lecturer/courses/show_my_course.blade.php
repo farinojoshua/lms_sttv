@@ -11,7 +11,7 @@
             <div class="col-sm-6">
                 <ol class="float-right breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('lecturer.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('lecturer.courses.index') }}">Course List</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('lecturer.courses.myCourses') }}">My Courses</a></li>
                     <li class="breadcrumb-item active">Course Details</li>
                 </ol>
             </div>

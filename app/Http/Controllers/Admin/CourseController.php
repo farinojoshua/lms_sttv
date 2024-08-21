@@ -15,13 +15,11 @@ class CourseController extends Controller
         $semesters = SemesterHelper::getSemesters();
         $selectedSemester = $request->get('semester', SemesterHelper::getCurrentSemester());
 
-        $query = Course::with('lecturer');
-
-        if ($selectedSemester) {
-            $query->where('semester', $selectedSemester);
-        }
-
-        $courses = $query->get();
+        $courses = Course::with('lecturer')
+            ->when($selectedSemester, function ($query) use ($selectedSemester) {
+                $query->where('semester', $selectedSemester);
+            })
+            ->get();
 
         return view('admin.courses.index', compact('courses', 'semesters', 'selectedSemester'));
     }
@@ -36,7 +34,7 @@ class CourseController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255',
+            'code' => 'required|string|max:255|unique:courses,code',
             'description' => 'nullable|string',
             'lecturer_id' => 'required|exists:users,id',
             'semester' => 'nullable|string',
@@ -57,7 +55,7 @@ class CourseController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255',
+            'code' => 'required|string|max:255|unique:courses,code,' . $course->id,
             'description' => 'nullable|string',
             'lecturer_id' => 'required|exists:users,id',
             'semester' => 'nullable|string',

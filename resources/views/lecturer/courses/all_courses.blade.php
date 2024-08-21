@@ -21,7 +21,7 @@
         <div class="col-12">
             <div class="card m-b-30">
                 <div class="card-body">
-                    <form method="GET" action="{{ route('lecturer.courses.all') }}" class="mb-3 form-inline">
+                    <form method="GET" action="{{ route('lecturer.courses.allAvailableCourses') }}" class="mb-3 form-inline">
                         <div class="mr-3 form-group">
                             <label for="semester" class="mr-2">Filter by Semester:</label>
                             <select name="semester" id="semester" class="form-control">
@@ -54,7 +54,7 @@
                                     <td>{{ $course->lecturer->name }}</td>
                                     <td>{{ $course->semester }}</td>
                                     <td>
-                                        <a href="{{ route('lecturer.courses.detail', $course->id) }}" class="btn btn-primary btn-sm">Detail</a>
+                                        <a href="{{ route('lecturer.courses.showCourseDetail', $course->id) }}" class="btn btn-primary btn-sm">Detail</a>
                                     </td>
                                 </tr>
                             @endforeach

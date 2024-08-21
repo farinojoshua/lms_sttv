@@ -11,7 +11,7 @@ class MaterialController extends Controller
 {
     public function index(CourseSection $section)
     {
-        $materials = Material::where('section_id', $section->id)->get();
+        $materials = $section->materials;
         return view('lecturer.materials.index', compact('section', 'materials'));
     }
 
@@ -30,12 +30,7 @@ class MaterialController extends Controller
 
         $filePath = $request->file('file') ? $request->file('file')->store('materials', 'public') : null;
 
-        Material::create([
-            'section_id' => $section->id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'file_path' => $filePath,
-        ]);
+        $section->materials()->create($request->only('title', 'description') + ['file_path' => $filePath]);
 
         return redirect()->route('lecturer.sections.materials.index', $section)->with('success', 'Learning material has been created.');
     }
@@ -55,14 +50,18 @@ class MaterialController extends Controller
 
         if ($request->file('file')) {
             $filePath = $request->file('file')->store('materials', 'public');
-            $material->file_path = $filePath;
+            $material->update(['file_path' => $filePath]);
         }
 
-        $material->title = $request->title;
-        $material->description = $request->description;
-        $material->save();
+        $material->update($request->only('title', 'description'));
 
         return redirect()->route('lecturer.sections.materials.index', $section)->with('success', 'Learning material has been updated.');
+    }
+
+    public function show($sectionId, Material $material)
+    {
+        $section = CourseSection::findOrFail($sectionId);
+        return view('lecturer.materials.show', compact('material', 'section'));
     }
 
     public function destroy(CourseSection $section, Material $material)

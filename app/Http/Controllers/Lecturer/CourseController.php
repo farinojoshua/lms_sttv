@@ -12,31 +12,21 @@ use App\Helpers\SemesterHelper;
 
 class CourseController extends Controller
 {
-    public function index(Request $request)
+    public function myCourses(Request $request)
     {
         $semesters = SemesterHelper::getSemesters();
         $selectedSemester = $request->get('semester', SemesterHelper::getCurrentSemester());
 
-        $query = Course::where('lecturer_id', Auth::id());
+        $courses = Course::where('lecturer_id', Auth::id())
+                         ->when($selectedSemester, function ($query) use ($selectedSemester) {
+                             $query->where('semester', $selectedSemester);
+                         })
+                         ->get();
 
-        if ($selectedSemester) {
-            $query->where('semester', $selectedSemester);
-        }
-
-        $courses = $query->get();
-
-        return view('lecturer.courses.index', compact('courses', 'semesters', 'selectedSemester'));
+        return view('lecturer.courses.my_courses', compact('courses', 'semesters', 'selectedSemester'));
     }
 
-    public function show(Course $course)
-    {
-        $enrollments = Enrollment::where('course_id', $course->id)->with('student')->get();
-        $sections = CourseSection::where('course_id', $course->id)->get();
-
-        return view('lecturer.courses.show', compact('course', 'enrollments', 'sections'));
-    }
-
-    public function allCourses(Request $request)
+    public function allAvailableCourses(Request $request)
     {
         $semesters = SemesterHelper::getSemesters();
         $selectedSemester = $request->get('semester', SemesterHelper::getCurrentSemester());
@@ -46,16 +36,24 @@ class CourseController extends Controller
                         })
                         ->get();
 
-        return view('lecturer.courses.all', compact('courses', 'semesters', 'selectedSemester'));
+        return view('lecturer.courses.all_courses', compact('courses', 'semesters', 'selectedSemester'));
     }
 
-    public function detail(Course $course)
+    public function showMyCourse(Course $course)
+    {
+        $enrollments = Enrollment::where('course_id', $course->id)->with('student')->get();
+        $sections = CourseSection::where('course_id', $course->id)->get();
+
+        return view('lecturer.courses.show_my_course', compact('course', 'enrollments', 'sections'));
+    }
+
+    public function showCourseDetail(Course $course)
     {
         $sections = CourseSection::where('course_id', $course->id)
-                                ->with(['assignments', 'materials', 'quizzes'])
-                                ->get();
+                                 ->with(['assignments', 'materials', 'quizzes'])
+                                 ->get();
 
-        return view('lecturer.courses.detail', compact('course', 'sections'));
+        return view('lecturer.courses.course_detail', compact('course', 'sections'));
     }
 
     public function addSection(Request $request, Course $course)
@@ -71,7 +69,7 @@ class CourseController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('lecturer.courses.show', $course)->with('success', 'Course section has been added.');
+        return redirect()->route('lecturer.courses.showMyCourse', $course)->with('success', 'Course section has been added.');
     }
 
     public function editSection(Course $course, CourseSection $section)
@@ -91,13 +89,13 @@ class CourseController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('lecturer.courses.show', $course)->with('success', 'Course section has been updated.');
+        return redirect()->route('lecturer.courses.showMyCourse', $course)->with('success', 'Course section has been updated.');
     }
 
     public function deleteSection(Course $course, CourseSection $section)
     {
         $section->delete();
 
-        return redirect()->route('lecturer.courses.show', $course)->with('success', 'Course section has been deleted.');
+        return redirect()->route('lecturer.courses.showMyCourse', $course)->with('success', 'Course section has been deleted.');
     }
 }
