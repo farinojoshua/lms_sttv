@@ -12,7 +12,7 @@ class AssignmentController extends Controller
 {
     public function index(CourseSection $section)
     {
-        $assignments = Assignment::where('section_id', $section->id)->get();
+        $assignments = $section->assignments;
         return view('lecturer.assignments.index', compact('section', 'assignments'));
     }
 
@@ -32,13 +32,7 @@ class AssignmentController extends Controller
 
         $filePath = $request->file('file') ? $request->file('file')->store('assignments', 'public') : null;
 
-        Assignment::create([
-            'section_id' => $section->id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'due_date' => $request->due_date,
-            'file_path' => $filePath,
-        ]);
+        $section->assignments()->create($request->only('title', 'description', 'due_date') + ['file_path' => $filePath]);
 
         return redirect()->route('lecturer.sections.assignments.index', $section)->with('success', 'Assignment has been created.');
     }
@@ -59,15 +53,18 @@ class AssignmentController extends Controller
 
         if ($request->file('file')) {
             $filePath = $request->file('file')->store('assignments', 'public');
-            $assignment->file_path = $filePath;
+            $assignment->update(['file_path' => $filePath]);
         }
 
-        $assignment->title = $request->title;
-        $assignment->description = $request->description;
-        $assignment->due_date = $request->due_date;
-        $assignment->save();
+        $assignment->update($request->only('title', 'description', 'due_date'));
 
         return redirect()->route('lecturer.sections.assignments.index', $section)->with('success', 'Assignment has been updated.');
+    }
+
+    public function show($sectionId, Assignment $assignment)
+    {
+        $section = CourseSection::findOrFail($sectionId);
+        return view('lecturer.assignments.show', compact('assignment', 'section'));
     }
 
     public function destroy(CourseSection $section, Assignment $assignment)
@@ -83,12 +80,8 @@ class AssignmentController extends Controller
             'feedback' => 'nullable|string',
         ]);
 
-        $submission->update([
-            'grade' => $request->grade,
-            'feedback' => $request->feedback,
-        ]);
+        $submission->update($request->only('grade', 'feedback'));
 
-        // Use the assignment to find the section and course
         $section = $submission->assignment->section;
         return redirect()->route('lecturer.sections.assignments.index', $section->id)->with('success', 'Submission has been graded.');
     }

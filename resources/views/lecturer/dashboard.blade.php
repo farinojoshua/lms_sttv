@@ -25,7 +25,7 @@
                     <ul class="list-group">
                         @foreach ($recentCourses as $course)
                             <li class="list-group-item">
-                                <a href="{{ route('lecturer.courses.show', $course->id) }}">{{ $course->name }}</a>
+                                <a href="{{ route('lecturer.courses.showMyCourse', $course->id) }}">{{ $course->name }}</a>
                             </li>
                         @endforeach
                     </ul>

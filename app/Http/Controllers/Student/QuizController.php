@@ -16,8 +16,9 @@ class QuizController extends Controller
     {
         $studentId = Auth::id();
         $quizzes = Quiz::whereHas('section.course.enrollments', function ($query) use ($studentId) {
-            $query->where('student_id', $studentId);
-        })->get();
+                $query->where('student_id', $studentId);
+            })
+            ->get();
 
         return view('student.quizzes.index', compact('quizzes'));
     }
@@ -44,12 +45,10 @@ class QuizController extends Controller
     {
         $studentId = Auth::id();
 
-        // Check if the quiz is still open
         if (!Carbon::now()->between($quiz->start_time, $quiz->end_time)) {
             return redirect()->route('student.quizzes.show', $quiz)->with('error', 'Quiz is no longer available.');
         }
 
-        // Check if the student has already submitted
         $existingSubmission = QuizSubmission::where('quiz_id', $quiz->id)
             ->where('student_id', $studentId)
             ->first();
@@ -58,7 +57,6 @@ class QuizController extends Controller
             return redirect()->route('student.quizzes.show', $quiz)->with('error', 'You have already submitted this quiz.');
         }
 
-        // Create a new submission
         $submission = QuizSubmission::create([
             'quiz_id' => $quiz->id,
             'student_id' => $studentId,

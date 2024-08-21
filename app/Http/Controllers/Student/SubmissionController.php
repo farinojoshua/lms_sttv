@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
-use Illuminate\Http\Request;
 use App\Models\Submission;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SubmissionController extends Controller
@@ -61,6 +61,6 @@ class SubmissionController extends Controller
         ]);
 
         return redirect()->route('student.assignments.show', [$submission->assignment->section->id, $submission->assignment->id])
-            ->with('success', 'Tugas berhasil diperbarui.');
+            ->with('success', 'Submission updated successfully.');
     }
 }

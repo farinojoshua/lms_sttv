@@ -11,7 +11,7 @@
             <div class="col-sm-6">
                 <ol class="float-right breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('lecturer.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('lecturer.courses.all') }}">All Courses</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('lecturer.courses.allAvailableCourses') }}">All Courses</a></li>
                     <li class="breadcrumb-item active">Course Details</li>
                 </ol>
             </div>
@@ -52,7 +52,7 @@
                             <ul class="mb-3 list-group">
                                 @foreach ($section->materials as $material)
                                     <li class="list-group-item">
-                                        <a href="{{ route('lecturer.materials.show', ['section' => $section->id, 'material' => $material->id]) }}"
+                                        <a href="{{ route('lecturer.sections.materials.show', ['section' => $section->id, 'material' => $material->id]) }}"
                                             class="btn btn-sm btn-primary">
                                             <i class="fa fa-file"></i> {{ $material->title }}
                                         </a>
@@ -68,7 +68,7 @@
                             <ul class="list-group">
                                 @foreach ($section->assignments as $assignment)
                                     <li class="list-group-item">
-                                        <a href="{{ route('lecturer.assignments.show', ['section' => $section->id, 'assignment' => $assignment->id]) }}"
+                                        <a href="{{ route('lecturer.sections.assignments.show', ['section' => $section->id, 'assignment' => $assignment->id]) }}"
                                             class="btn btn-sm btn-primary">
                                             <i class="fa fa-tasks"></i> {{ $assignment->title }}
                                         </a>
@@ -84,7 +84,7 @@
                             <ul class="mb-3 list-group">
                                 @foreach ($section->quizzes as $quiz)
                                     <li class="list-group-item">
-                                        <a href="{{ route('lecturer.quizzes.show', ['section' => $section->id, 'quiz' => $quiz->id]) }}" class="btn btn-sm btn-primary">
+                                        <a href="{{ route('lecturer.sections.quizzes.show', ['section' => $section->id, 'quiz' => $quiz->id]) }}" class="btn btn-sm btn-primary">
                                             <i class="fa fa-question-circle"></i> {{ $quiz->title }}
                                         </a>
                                     </li>
