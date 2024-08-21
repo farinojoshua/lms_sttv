@@ -4,22 +4,33 @@ namespace App\Helpers;
 
 class SemesterHelper
 {
-    public static function getSemesters()
+    /**
+     * Get a list of semesters for the last X years.
+     *
+     * @param int $yearsBack Number of years to go back from the current year.
+     * @return array
+     */
+    public static function getSemesters($yearsBack = 5)
     {
         $currentYear = date('Y');
-        $nextYear = $currentYear + 1;
-        $prevYear = $currentYear - 1;
+        $semesters = [];
 
-        $semesters = [
-            "Ganjil {$prevYear}/{$currentYear}",
-            "Genap {$prevYear}/{$currentYear}",
-            "Ganjil {$currentYear}/{$nextYear}",
-            "Genap {$currentYear}/{$nextYear}",
-        ];
+        for ($i = $yearsBack; $i >= 0; $i--) {
+            $startYear = $currentYear - $i;
+            $endYear = $startYear + 1;
+
+            $semesters[] = "Ganjil {$startYear}/{$endYear}";
+            $semesters[] = "Genap {$startYear}/{$endYear}";
+        }
 
         return $semesters;
     }
 
+    /**
+     * Get the current semester based on the current month.
+     *
+     * @return string
+     */
     public static function getCurrentSemester()
     {
         $currentYear = date('Y');
@@ -27,7 +38,7 @@ class SemesterHelper
         $prevYear = $currentYear - 1;
         $month = date('n');
 
-        // Assume that Ganjil is from July to December and Genap is from January to June
+        // Assume Ganjil (odd) semester is from July to December and Genap (even) semester is from January to June
         if ($month >= 7 && $month <= 12) {
             return "Ganjil {$currentYear}/{$nextYear}";
         } else {

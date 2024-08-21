@@ -12,7 +12,8 @@ class CourseController extends Controller
 {
     public function index(Request $request)
     {
-        $semesters = SemesterHelper::getSemesters();
+        // Customize how many years back you want to go
+        $semesters = SemesterHelper::getSemesters(10);  // Example: 10 years back
         $selectedSemester = $request->get('semester', SemesterHelper::getCurrentSemester());
 
         $courses = Course::with('lecturer')
