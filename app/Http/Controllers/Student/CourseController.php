@@ -48,7 +48,7 @@ class CourseController extends Controller
             'course_id' => $course->id,
         ]);
 
-        return redirect()->route('student.courses.enrolled')->with('success', 'You have successfully enrolled in this course.');
+        return redirect()->route('student.courses.detail', $course->id)->with('success', 'You have successfully enrolled in this course.');
     }
 
     public function unenroll(Course $course)
@@ -57,7 +57,7 @@ class CourseController extends Controller
             ->where('course_id', $course->id)
             ->delete();
 
-        return redirect()->route('student.courses.enrolled')->with('success', 'You have successfully unenrolled from this course.');
+        return redirect()->route('student.courses.detail', $course->id)->with('success', 'You have successfully unenrolled from this course.');
     }
 
     public function enrolled(Request $request)

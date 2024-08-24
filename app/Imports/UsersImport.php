@@ -13,7 +13,7 @@ class UsersImport implements ToModel, WithHeadingRow
         return new User([
             'name'     => $row['name'],
             'email'    => $row['email'],
-            'password' => bcrypt($row['npm_nip']),
+            'password' => bcrypt($row['password']),
             'role'     => $row['role'],
         ]);
     }
