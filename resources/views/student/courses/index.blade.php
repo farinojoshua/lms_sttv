@@ -62,10 +62,10 @@
                                     <td>{{ $course->code }}</td>
                                     <td>{{ $course->lecturer->name }}</td>
                                     <td>{{ $course->semester }}</td>
-                                    <td>
-                                        <form action="{{ route('student.courses.enroll', $course->id) }}" method="POST">
+                                    <td class="d-flex">
+                                        <form action="{{ route('student.courses.enroll', $course->id) }}" method="POST" class="mr-2">
                                             @csrf
-                                            <button type="submit" class="btn btn-primary btn-sm">Enroll</button>
+                                            <button type="submit" class="btn btn-success btn-sm">Enroll</button>
                                         </form>
                                         <a href="{{ route('student.courses.detail', $course->id) }}" class="btn btn-primary btn-sm">Detail</a>
                                     </td>

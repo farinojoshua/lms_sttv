@@ -6,12 +6,12 @@
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h4 class="page-title font-weight-bold">Course Details: {{ $course->name }}</h4>
+                <h4 class="page-title">Course Details: {{ $course->name }}</h4>
             </div>
             <div class="col-sm-6">
                 <ol class="float-right p-0 bg-transparent breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}" class="text-muted">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('student.courses.index') }}" class="text-muted">Course List</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('student.courses.index') }}">Course List</a></li>
                     <li class="breadcrumb-item active">Course Details</li>
                 </ol>
             </div>
@@ -29,7 +29,7 @@
 
     <div class="mb-4 border-0 rounded-lg shadow card">
         <div class="card-body">
-            <h5 class="card-title text-primary font-weight-bold">{{ $course->name }}</h5>
+            <h5 class="card-title">{{ $course->name }}</h5>
             <p class="card-text text-muted">{{ $course->description }}</p>
             <p class="card-text"><strong>Lecturer:</strong> {{ $course->lecturer->name }}</p>
 
@@ -49,8 +49,8 @@
             <div class="mb-3 border-0 rounded-lg shadow-sm card">
                 <div class="p-0 card-header bg-light text-primary rounded-top" id="heading{{ $section->id }}">
                     <h2 class="mb-0">
-                        <button class="p-3 text-left btn btn-link btn-block d-flex justify-content-between align-items-center"
-                            type="button" data-toggle="collapse" data-target="#collapse{{ $section->id }}" aria-expanded="true"
+                        <button class="p-3 text-left btn btn-link btn-block d-flex justify-content-between align-items-center" type="button"
+                            data-toggle="collapse" data-target="#collapse{{ $section->id }}" aria-expanded="true"
                             aria-controls="collapse{{ $section->id }}">
                             <span>{{ $section->name }}</span>
                             <i class="fa fa-chevron-down transition-icon"></i>
